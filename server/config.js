@@ -1,8 +1,10 @@
-export const PORT = 5555;
+import dotenv from 'dotenv'
+dotenv.config()
 
-export const mongoDBURL =
-  'mongodb+srv://kuutio:kuutio@kuutio.agwc7pp.mongodb.net/kuutio?retryWrites=true&w=majority';
-  
-export const service_key = process.env.SERVICE_KEY
+const PORT = process.env.PORT
+const mongoUri = process.env.MONGODB_URI
 
-export const users_url = process.env.USERS_URL
+const service_key = process.env.SERVICE_KEY
+const users_url = process.env.USERS_URL
+
+export { PORT, mongoUri, service_key, users_url }
