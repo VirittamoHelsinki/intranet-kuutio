@@ -9,18 +9,21 @@ let token = ''
 // 1. Set token when we get it from the backend with a key.
 // 2. Set the token from a cookie when the user loads the page.
 const setToken = (newToken) => {
-    token = `bearer ${newToken}`
+    if (newToken) token = `bearer ${newToken}`
+    else          token = null
 }
 
-const requestConfig = (object) => {
-    const headers = { 'Authorization': token }
-    
-      if (!object) return { headers }
-    
-      return {
-        headers,
+export const requestConfig = object => {
+    if (!token && !object) return {}
+  
+    if (token && !object) return { headers: { 'Authorization': token } }
+  
+    if (!token && object) return { data: object }
+
+    return {
+        headers: { 'Authorization': token },
         data: object
-      }
+    }
 }
 
 // Get token from the backend using the key.

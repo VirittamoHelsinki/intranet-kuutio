@@ -2,9 +2,8 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
-import { PORT, mongoDBURL } from './config.js';
+import { PORT, mongoUri } from './config.js';
 import bookingRoute from './routes/bookingRoute.js';
-
 const app = express();
 
 // Middleware for parsing request body
@@ -21,7 +20,7 @@ app.get('/', (request, response) => {
 app.use('/api/booking', bookingRoute);
 
 mongoose
-  .connect(mongoDBURL)
+  .connect(mongoUri)
   .then(() => {
     console.log('App connected to database');
     app.listen(PORT, () => {
@@ -38,7 +37,7 @@ mongoose
 // import express from 'express';
 // import mongoose from 'mongoose';
 // import cors from 'cors';
-// import { PORT, mongoDBURL } from './config.js';
+// import { PORT, mongoUri } from './config.js';
 // import bookingRoute from './routes/bookingRoute.js';
 
 // const app = express();
@@ -56,7 +55,7 @@ mongoose
 // app.use('/api/booking', bookingRoute);
 // app.use('/api/booking', bookingRoute);
 // mongoose
-//   .connect(mongoDBURL)
+//   .connect(mongoUri)
 //   .then(() => {
 //     console.log('App connected to database');
 //     app.listen(PORT, () => {
@@ -73,7 +72,7 @@ mongoose
 
 
 // import express from 'express';
-// import { PORT, mongoDBURL } from './config.js';
+// import { PORT, mongoUri } from './config.js';
 // import mongoose from 'mongoose';
 // import bookingRoute from './routes/bookingRoute.js';
 // //import {authorizeRouter} from './routes/authorizeRouter.js';
@@ -97,7 +96,7 @@ mongoose
 // // app.use('/api/authorize', authorizeRouter);
 
 // mongoose
-//   .connect(mongoDBURL)
+//   .connect(mongoUri)
 //   .then(() => {
 //     console.log('App connected to database');
 //     app.listen(PORT, () => {
