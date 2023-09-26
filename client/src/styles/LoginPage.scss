@@ -1,0 +1,140 @@
+.loginpage-main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 100px;
+  gap: 50px;
+
+  .welcome-label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    label {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      font-family: "Inter", sans-serif;
+      font-style: normal;
+      font-weight: 700;
+      font-size: 40px;
+      line-height: 20px;
+    }
+  }
+
+  .loginpage-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 850px;
+    height: 560px;
+    border: 1px solid black;
+
+    &.register {
+      height: 660px;
+    }
+
+    .login-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 400px;
+      height: 400px;
+      gap: 50px;
+      padding: 25px;
+
+      .login-label {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+
+        label {
+          font-family: "Inter", sans-serif;
+          font-style: normal;
+          font-weight: 600;
+          font-size: 32px;
+          line-height: 38px;
+          text-align: left;
+        }
+      }
+
+      .input-field {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        width: 100%;
+        height: 50px;
+        gap: 10px;
+
+        input {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 375px;
+          height: 50px;
+          font-family: "Inter", sans-serif;
+          font-style: normal;
+          font-weight: 500;
+          font-size: 15px;
+          line-height: 20px;
+          text-align: left;
+          padding: 0 12px;
+          border: 1px solid black;
+          border-radius: 4px;
+        }
+
+        select {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 120px;
+          height: 52px;
+          font-family: "Inter", sans-serif;
+          font-style: normal;
+          font-weight: 500;
+          font-size: 15px;
+          line-height: 20px;
+          text-align: left;
+          padding: 0 12px;
+          border: 1px solid black;
+          border-radius: 4px;
+        }
+      }
+
+      .login-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+
+        button {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 500px;
+          height: 70px;
+          background: black;
+          color: white;
+          font-family: "Inter", sans-serif;
+          font-style: normal;
+          font-weight: 700;
+          font-size: 18px;
+          line-height: 22px;
+        }
+      }
+
+      .register-label {
+        display: flex;
+        justify-content: center;
+        gap: 5px;
+
+        .link-label {
+          color: #2272f3;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}

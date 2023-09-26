@@ -1,0 +1,444 @@
+.bookingpage-main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: fit-content;
+
+  .bookingpage-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 1440px;
+
+    .calendar-times-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      width: 950px;
+      padding: 37px;
+      gap: 40px;
+
+      .times-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: 30px;
+
+        label {
+          display: flex;
+          align-items: center;
+          font-family: "Inter", sans-serif;
+          font-style: normal;
+          font-weight: 700;
+          font-size: 24px;
+          line-height: 20px;
+          text-align: left;
+        }
+
+        .times-row {
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+          gap: 27px;
+
+          .time-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 83px;
+            height: 50px;
+            background: #e8f3fc;
+            font-style: normal;
+            font-weight: 700;
+            font-size: 15px;
+            line-height: 20px;
+            text-align: center;
+            cursor: pointer;
+
+            &.disabled {
+              color: #999999;
+              cursor: auto;
+            }
+          }
+        }
+      }
+    }
+
+    .booking-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: #f5f5f5;
+      width: 490px;
+      height: 900px;
+
+      .booking-data-content {
+        display: flex;
+        width: 100%;
+
+        .booking-data {
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+          width: 100%;
+          height: 657px;
+          gap: 60px;
+
+          .booking-headline {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 70px;
+
+            label {
+              display: flex;
+              align-items: center;
+              font-family: "Inter", sans-serif;
+              font-style: normal;
+              font-weight: 600;
+              font-size: 25px;
+              line-height: 20px;
+              text-align: center;
+            }
+          }
+
+          .new-booking-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            width: 100%;
+            gap: 50px;
+
+            .topic-content {
+              display: flex;
+              justify-content: center;
+              padding: 0 30px;
+
+              input {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 375px;
+                height: 50px;
+                font-family: "Inter", sans-serif;
+                font-style: normal;
+                font-weight: 500;
+                font-size: 15px;
+                line-height: 20px;
+                text-align: left;
+                padding: 0 15px;
+              }
+            }
+
+            .selected-time {
+              display: flex;
+              flex-direction: row;
+              justify-content: center;
+              gap: 5px;
+
+              label {
+                font-family: "Inter", sans-serif;
+                font-style: normal;
+                font-weight: 600;
+                font-size: 24px;
+                line-height: 20px;
+              }
+            }
+          }
+
+          .booking-column {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            gap: 40px;
+            width: 80%;
+            padding: 0 10%;
+            overflow-y: auto;
+
+            .booking-details {
+              display: flex;
+              flex-direction: row;
+              justify-content: flex-start;
+              gap: 10px;
+
+              .time-label {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100px;
+                height: 50px;
+                background: black;
+
+                label {
+                  display: flex;
+                  align-items: center;
+                  text-align: center;
+                  font-style: normal;
+                  font-weight: 700;
+                  font-size: 15px;
+                  line-height: 20px;
+                  color: white;
+                }
+              }
+
+              .detail-content {
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                gap: 10px;
+
+                .name-label {
+                  display: flex;
+                  justify-content: flex-start;
+
+                  label {
+                    font-style: normal;
+                    font-weight: 700;
+                    font-size: 14px;
+                    line-height: 20px;
+                    display: flex;
+                    align-items: center;
+                    text-align: left;
+                  }
+                }
+
+                .topic-label {
+                  display: flex;
+                  justify-content: flex-start;
+
+                  label {
+                    font-style: normal;
+                    font-weight: 400;
+                    font-size: 13px;
+                    line-height: 20px;
+                    display: flex;
+                    align-items: center;
+                    text-align: left;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .booking-button-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 240px;
+        gap: 17px;
+
+        .booking-button {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 389px;
+          height: 60px;
+          background: black;
+          border: 2px solid #0000bf;
+          font-family: "Inter", sans-serif;
+          font-style: normal;
+          font-weight: 700;
+          font-size: 15px;
+          line-height: 20px;
+          color: white;
+
+          &.disabled {
+            background: #f5f5f5;
+            border: 2px solid #999999;
+            font-family: "Inter", sans-serif;
+            font-style: normal;
+            font-weight: 700;
+            font-size: 15px;
+            line-height: 20px;
+            color: #999999;
+          }
+        }
+
+        .homepage-button {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 389px;
+          height: 60px;
+          background: #f5a3c7;
+          color: black;
+          font-family: "Inter", sans-serif;
+          font-style: normal;
+          font-weight: 700;
+          font-size: 15px;
+          line-height: 20px;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+
+.fullscreen-modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #e8f3fc;
+  position: absolute;
+  z-index: 1000;
+  border: 1px #9c9797 solid;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  gap: 100px;
+
+  .modal-detail-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: max-content;
+    gap: 10px;
+
+    .detail-row {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      gap: 5px;
+
+      .detail-subject {
+        display: flex;
+        justify-content: flex-start;
+        width: 70px;
+
+        label {
+          font-family: "Inter", sans-serif;
+          font-style: normal;
+          font-weight: 300;
+          font-size: 24px;
+          line-height: 29px;
+        }
+      }
+
+      .detail-value {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+
+        label {
+          display: flex;
+          align-items: center;
+          font-family: "Inter", sans-serif;
+          font-style: normal;
+          font-weight: 600;
+          font-size: 26px;
+          line-height: 29px;
+        }
+      }
+    }
+  }
+
+  .modal-thanks-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 40px;
+
+    .thanks-label {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      label {
+        font-family: "Inter", sans-serif;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 96px;
+        line-height: 20px;
+      }
+    }
+
+    .description-label {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      label {
+        font-family: "Inter", sans-serif;
+        font-style: normal;
+        font-weight: 300;
+        font-size: 24px;
+        line-height: 29px;
+      }
+    }
+  }
+
+  .modal-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+
+    .black-button {
+      width: 350px;
+      height: 70px;
+      background: #000000;
+      color: white;
+    }
+
+    .nocolor-button {
+      width: 350px;
+      height: 70px;
+      background: #e8f3fc;
+      border: 1px solid black;
+    }
+  }
+}
+
+@media screen and (max-width: 1440px) {
+  .bookingpage-main {
+    justify-content: center;
+    align-items: center;
+
+    .bookingpage-content {
+      flex-direction: column !important;
+      align-items: center;
+
+      .calendar-times-content {
+        justify-content: flex-start !important;
+        align-items: center !important;
+        height: 840px !important;
+
+        .times-content {
+          width: 830px;
+
+          .times-row {
+            justify-content: space-between;
+          }
+        }
+      }
+
+      .booking-content {
+        width: 830px !important;
+        height: 600px !important;
+        justify-content: center;
+        align-items: center;
+
+        .booking-data-content {
+          height: 400px !important;
+
+          .booking-data {
+            align-items: center;
+            .booking-column {
+              width: 45%;
+            }
+          }
+        }
+      }
+    }
+  }
+}

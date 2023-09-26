@@ -1,0 +1,35 @@
+.frontpage-main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: fit-content;
+
+  .frontpage-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 1440px;
+    gap: 21px;
+    padding: 123px;
+
+    .frontpage-button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 700px;
+      height: 200px;
+      background: #f5a3c7;
+      color: black;
+      font-family: "Inter", sans-serif;
+      font-style: normal;
+      font-weight: 700;
+      font-size: 40px;
+      line-height: 20px;
+      border-radius: 0;
+      border: 0;
+      cursor: pointer;
+    }
+  }
+}
