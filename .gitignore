@@ -4,4 +4,4 @@
 **/*.code.workspace*
 
 /build/
-client/build/
+client/dist/

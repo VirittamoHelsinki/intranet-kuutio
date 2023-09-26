@@ -9,6 +9,9 @@ const app = express();
 // Middleware for parsing request body
 app.use(express.json());
 
+// Middleware for serving static frontend files
+app.use(express.static('dist'))
+
 // Middleware for handling CORS POLICY
 app.use(cors());
 
@@ -18,6 +21,14 @@ app.get('/', (request, response) => {
 
 // Mount the bookingRoute under the /api/booking path
 app.use('/api/booking', bookingRoute);
+
+
+
+// Directs requests that dont match any of the routes previously
+// defined to the frontend.
+app.get('*', (req, res) => {
+	res.sendFile(path.join(__dirname+'/dist/index.html'));
+})
 
 mongoose
   .connect(mongoUri)
