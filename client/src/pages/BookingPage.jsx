@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { fullName, initTimes } from "../features/functions";
 import Calendar from "../components/Calendar";
 import "../styles/BookingPage.scss";
+import axios from "axios";
+
 
 const BookingPage = () => {
   const [date, setDate] = useState(new Date());
@@ -25,10 +27,10 @@ const BookingPage = () => {
       selectedTime,
     };
     axios
-      .post('http://localhost:5555/bookings', data)
+      .post('http://localhost:5555/api/booking', data)
       .then(() => {
         setLoading(false);
-        enqueueSnackbar('Book Created successfully', { variant: 'success' });
+        enqueueSnackbar('Booking Created successfully', { variant: 'success' });
         navigate('/');
       })
       .catch((error) => {

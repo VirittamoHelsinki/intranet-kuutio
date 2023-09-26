@@ -11,11 +11,11 @@ const bookingSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    date: {
+    selectedDate: {
       type: String,
       required: true,
     },
-    time: {
+    selectedTime: {
       type: String,
       required: true,
     },

@@ -1,4 +1,4 @@
-// bookingRoute.js
+
 import express from 'express';
 import { Booking } from '../models/bookingModel.js';
 
@@ -10,8 +10,8 @@ router.post('/', async (request, response) => {
     if (
       !request.body.topic ||
       !request.body.name ||
-      !request.body.date ||
-      !request.body.time
+      !request.body.selectedDate ||
+      !request.body.selectedTime
     ) {
       return response.status(400).send({
         message: 'Send all required fields: topic, name, date, time',
@@ -20,8 +20,8 @@ router.post('/', async (request, response) => {
     const newBooking = {
       topic: request.body.topic,
       name: request.body.name,
-      date: request.body.date,
-      time: request.body.time,
+      selectedDate: request.body.selectedDate,
+      selectedTime: request.body.selectedTime,
     };
 
     const booking = await Booking.create(newBooking);
