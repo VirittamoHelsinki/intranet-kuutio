@@ -4,6 +4,7 @@ import { fullName, initTimes } from "../features/functions";
 import Calendar from "../components/Calendar";
 import "../styles/BookingPage.scss";
 import axios from "axios";
+import BookingListPage from "./BookingListPage";
 
 
 const BookingPage = () => {
@@ -110,7 +111,8 @@ const BookingPage = () => {
                   </div>
                 ) : (
                   <div className="booking-column">
-                    {bookings
+                    <BookingListPage />
+                    {/* {bookings
                       .filter((b) => b.data !== null)
                       .map((booking, index) => (
                         <div className="booking-details" key={index}>
@@ -129,7 +131,7 @@ const BookingPage = () => {
                             </div>
                           </div>
                         </div>
-                      ))}
+                      ))} */}
                   </div>
                 )}
               </div>
@@ -145,6 +147,12 @@ const BookingPage = () => {
             )}
             <Link to="/" className="homepage-button">
               Palaa etusivulle
+            </Link>
+
+            <Link to="/bookings">
+              <button className="homepage-button" >
+              Näytä varaukset
+              </button>
             </Link>
           </div>
         </div>
@@ -221,6 +229,7 @@ const BookingPage = () => {
                 Takaisin etusivulle
               </button>
             </Link>
+            
           </div>
         </div>
       )}
@@ -229,3 +238,5 @@ const BookingPage = () => {
 };
 
 export default BookingPage;
+
+
