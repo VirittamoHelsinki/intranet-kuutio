@@ -4,6 +4,9 @@ import { Booking } from '../models/bookingModel.js';
 
 const router = express.Router();
 
+// From here on, require authorization level 1 on all routes.
+//router.all('*', requireAuthorization(1))
+
 // Route for posting a new Booking
 router.post('/', async (request, response) => {
   try {
