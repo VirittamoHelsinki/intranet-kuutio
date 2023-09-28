@@ -442,3 +442,24 @@
     }
   }
 }
+
+//Bookings card 
+
+.booking-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px; /* Adjust the gap between cards as needed */
+}
+
+.booking-card {
+  width: 500px;
+  border: 1px solid #000;
+  background-color: #000;
+  color: #fff;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.card-content {
+  text-align: left;
+}
