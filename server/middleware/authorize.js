@@ -1,5 +1,5 @@
-const axios = require('axios')
-const { users_url, service_name } = require('../config')
+import axios from 'axios'
+import { users_url, service_name } from '../config'
 
 // // Ask authorization from the users service.
 // const requireAuthorization = async (req, res, next) => {
@@ -65,6 +65,4 @@ const requireAuthorization = level => {
   }
 }
 
-module.exports = {
-  requireAuthorization
-}
+export { requireAuthorization }

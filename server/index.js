@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import { PORT, mongoUri } from './config.js';
 import bookingRoute from './routes/bookingRoute.js';
+import authorizeRouter from './routes/authorizeRouter.js';
 const app = express();
 
 // Middleware for parsing request body
@@ -20,7 +21,7 @@ app.get('/', (request, response) => {
 
 // Mount the bookingRoute under the /api/booking path
 app.use('/api/booking', bookingRoute);
-// // app.use('/api/authorize', authorizeRouter);
+app.use('/api/authorize', authorizeRouter);
 
 
 

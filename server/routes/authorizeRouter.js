@@ -1,8 +1,10 @@
-const crypto = require('crypto')
-const axios = require('axios')
-const authorizeRouter = require('express').Router()
-const { service_key } = require('../config')
-const { requireAuthorization } = require('../middleware/authorize')
+import crypto from 'crypto'
+import express from 'express'
+
+import { service_key } from '../config'
+import { requireAuthorization } from '../middleware/authorize'
+
+const authorizeRouter = express.Router()
 
 // a storage where temporary keys are mapped to tokens. Which
 // are removed once the key is used or once it expires.
@@ -82,8 +84,8 @@ authorizeRouter.get('/:key', async (req, res, next) => {
 })
 
 
-// All routes below this middleware require authorization.
-authorizeRouter.all('*', requireAuthorization)
+// From here on, require authorization level 1 on all routes.
+router.all('*', requireAuthorization(1))
 
 
 // A client that has a token can get their user data.
@@ -102,4 +104,4 @@ authorizeRouter.get('/', async (req, res, next) => {
 })
 
 
-module.exports = authorizeRouter
+export default authorizeRouter
