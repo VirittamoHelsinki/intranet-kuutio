@@ -1,11 +1,14 @@
 // node module imports
 import { useEffect } from 'react'
+import { Link } from "react-router-dom";
 import Cookies from 'universal-cookie'
 
 // file imports
-import authorizeApi from '../../api/authorize'
-import useStore from '../../store'
-import { usersUrl, domain } from '../../config'
+import authorizeApi from '../api/authorize'
+import useStore from '../store'
+import { usersUrl, domain } from '../config'
+
+import "../styles/Header.scss";
 
 const Authorize = props => {
     const { setUser, user } = useStore()
@@ -67,19 +70,36 @@ const Authorize = props => {
         setUser(null)
     }
 
+    // if (user) return (
+    //   <a
+    //     href="/"
+    //     onClick={logout}
+    //     style={props.linkStyle}
+    //   >Kirjaudu ulos</a>
+    // )
+    
+    // return (
+    //   <a
+    //     href={`${usersUrl}/?domain=${domain}`}
+    //     style={props.linkStyle}
+    //   >Kirjaudu</a>
+    // )
+    
     if (user) return (
-      <a
-        href="/"
+      <Link
+        to="/"
         onClick={logout}
-        style={props.linkStyle}
-      >Kirjaudu ulos</a>
+        className="header-label"
+      >
+        Kirjaudu ulos
+      </Link>
     )
     
     return (
-      <a
-        href={`${usersUrl}/?domain=${domain}`}
-        style={props.linkStyle}
-      >Kirjaudu</a>
+      <Link
+        to={`${usersUrl}/?domain=${domain}`}
+        className="header-label"
+      >Kirjaudu</Link>
     )
 }
 

@@ -23,8 +23,6 @@ app.get('/', (request, response) => {
 app.use('/api/booking', bookingRoute);
 app.use('/api/authorize', authorizeRouter);
 
-
-
 // Directs requests that dont match any of the routes previously
 // defined to the frontend.
 app.get('*', (req, res) => {
@@ -34,9 +32,9 @@ app.get('*', (req, res) => {
 mongoose
   .connect(mongoUri)
   .then(() => {
-    console.log('App connected to database');
+    console.log('Kuutio app connected to database');
     app.listen(PORT, () => {
-      console.log(`App is listening to port: ${PORT}`);
+      console.log(`Kuutio app is listening to port: ${PORT}`);
     });
   })
   .catch((error) => {

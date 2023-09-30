@@ -1,8 +1,8 @@
 import crypto from 'crypto'
 import express from 'express'
 
-import { service_key } from '../config'
-import { requireAuthorization } from '../middleware/authorize'
+import { service_key } from '../config.js'
+import { requireAuthorization } from '../middleware/authorize.js'
 
 const authorizeRouter = express.Router()
 
@@ -85,7 +85,7 @@ authorizeRouter.get('/:key', async (req, res, next) => {
 
 
 // From here on, require authorization level 1 on all routes.
-router.all('*', requireAuthorization(1))
+authorizeRouter.all('*', requireAuthorization(1))
 
 
 // A client that has a token can get their user data.

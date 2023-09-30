@@ -38,7 +38,7 @@ const getToken = async (key) => {
 // get the user saved into the token.
 const getUser = async () => {
     const response = await axios.get(
-        `${usersUrl}/api/authorize`, requestConfig()
+        `${apiUrl}/authorize`, requestConfig()
     )
 
     return response.data

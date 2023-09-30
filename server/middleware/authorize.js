@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { users_url, service_name } from '../config'
+import { users_url, service_name } from '../config.js'
 
 // // Ask authorization from the users service.
 // const requireAuthorization = async (req, res, next) => {
@@ -31,6 +31,7 @@ import { users_url, service_name } from '../config'
 //     } catch (exception) { next(exception) }
 //   }
 
+
 // Ask authorization from the users service.
 // A function that returns an authorization middleware function.
 // level: access level required to access the route.
@@ -38,13 +39,12 @@ const requireAuthorization = level => {
   return async (req, res, next) => {
     try {
       const token = req.get('authorization')
-
+      
       if(!token) return res.status(401).send('token missing')
-    
+
       const response = await axios.get(
         `${users_url}/api/authorize/service/${service_name}/${level}`,
 
-        {},
         { headers: { 'Authorization': token }}
       )
 
