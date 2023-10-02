@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "start": "vite serve",
-    "build": "vite build",
+    "build:dev": "vite build --mode development",
     "build:prod": "vite build --mode production",
     "preview": "vite preview",
     "test": "jest --passWithNoTests"
