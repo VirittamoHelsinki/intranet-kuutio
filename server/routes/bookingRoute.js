@@ -51,4 +51,24 @@ router.get('/getbookings', async (request, response) => {
   }
 });
 
+router.delete('/:id', async (request, response) => {
+  try {
+    const booking = await Booking.findById(request.params.id);
+
+    // Might want to check if the user is the owner of the booking
+    // first. Now allowing anyone with  access level 1 to delete any booking.
+
+    if (booking) {
+      await Booking.findByIdAndRemove(request.params.id);
+      
+      response.status(200).send({ message: 'Booking removed' });
+    } else {
+      response.status(404).send({ message: 'Booking not found' });
+    }
+  } catch (error) {
+    console.log(error.message);
+    response.status(500).send({ message: error.message });
+  }
+});
+
 export default router;

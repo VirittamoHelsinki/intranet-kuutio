@@ -18,11 +18,20 @@ const Authorize = props => {
     const user_key  = urlParams.get("user_key")
 
     const cookies = new Cookies()
+    const kuutioToken = cookies.get('kuutioToken')
 
     useEffect(() => {
         loadTokenFromCookies()
         
+        // If the user_key is present, exchange it for a token.
         if (user_key) getAuthorization()
+        else {
+            // If the user_key is not present, and the kuutioToken is not
+            // present in the cookies, redirect the user to the login service.
+            if (!kuutioToken) {
+              window.location.href = `${usersUrl}/?domain=${domain}`
+            }
+        }
     }, [])
 
     const getAuthorization = async () => {
@@ -46,8 +55,6 @@ const Authorize = props => {
     }
 
     const loadTokenFromCookies = async () => {
-        const kuutioToken = cookies.get('kuutioToken')
-    
         if (kuutioToken) {
     
           // Initialize the user state with the token from the cookie.

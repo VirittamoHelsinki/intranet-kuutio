@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { fullName, initTimes } from "../features/functions";
 import Calendar from "../components/Calendar";
 import "../styles/BookingPage.scss";
-import axios from "axios";
+import bookingApi from "../api/booking";
 import BookingListPage from "./BookingListPage";
 
 
@@ -27,8 +27,8 @@ const BookingPage = () => {
       selectedDate,
       selectedTime,
     };
-    axios
-      .post('http://localhost:5555/api/booking', data)
+    bookingApi
+      .create(data)
       .then(() => {
         setLoading(false);
         enqueueSnackbar('Booking Created successfully', { variant: 'success' });
