@@ -29,7 +29,7 @@ const Authorize = props => {
             // If the user_key is not present, and the kuutioToken is not
             // present in the cookies, redirect the user to the login service.
             if (!kuutioToken) {
-              window.location.href = `${usersUrl}/?domain=${domain}`
+              //window.location.href = `${usersUrl}/?domain=${domain}`
             }
         }
     }, [])

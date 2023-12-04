@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { months, weekDays } from "../features/arrays";
 import "../styles/Calendar.scss";
 
@@ -12,32 +12,17 @@ const Calendar = ({ date, setDate, setSelectedDate, highlightDays = [] }) => {
     setCurrentMonth(date.getMonth());
     setCurrentYear(date.getFullYear());
     setDays(getDaysToDisplay(date.getFullYear(), date.getMonth()));
-
-    const firstDayOfMonth = getFirstDayOfMonth(date.getFullYear(), date.getMonth());
-    const lastDaysOfPreviousMonth = getLastDaysOfPreviousMonth(date.getFullYear(), date.getMonth() - 1, firstDayOfMonth);
-    setSelectedDay(date.getDate() + lastDaysOfPreviousMonth.length - 2);
+    setSelectedDay(date.getDate());
   }, [date]);
 
-  useEffect(() => {
-    const firstDayOfMonth = getFirstDayOfMonth(date.getFullYear(), date.getMonth());
-    const lastDaysOfPreviousMonth = getLastDaysOfPreviousMonth(date.getFullYear(), date.getMonth() - 1, firstDayOfMonth);
-    if (selectedDay !== null && selectedDay !== date.getDate() + lastDaysOfPreviousMonth.length - 2) {
-      setDate(new Date(date.getFullYear(), date.getMonth(), selectedDay - (getFirstDayOfMonth(currentYear, currentMonth) - 2)));
-      setSelectedDate(new Date(date.getFullYear(), date.getMonth(), selectedDay - (getFirstDayOfMonth(currentYear, currentMonth) - 2)));
-    }
-  }, [selectedDay]);
+  const gotoPreviousMonth = () => {
+    const newDate = new Date(currentYear, currentMonth - 1, 1);
+    setDate(newDate);
+  };
 
-  const changeMonth = (month) => {
-    let year = currentYear;
-    if (month > 11) {
-      month = 0;
-      year++;
-    }
-    if (month < 0) {
-      month = 11;
-      year--;
-    }
-    setDate(new Date(year, month, date.getDate()));
+  const gotoNextMonth = () => {
+    const newDate = new Date(currentYear, currentMonth + 1, 1);
+    setDate(newDate);
   };
 
   const getFirstDayOfMonth = (year, month) => {
@@ -47,12 +32,6 @@ const Calendar = ({ date, setDate, setSelectedDate, highlightDays = [] }) => {
   const getDaysInMonthAsArray = (year, month) => {
     const lastDay = new Date(year, month + 1, 0).getDate();
     return new Array(lastDay).fill(0).map((_, i) => new Date(year, month, i + 1));
-  };
-
-  const getTrueDay = (date) => {
-    let day = date.getDay();
-    if (day === 0) return 6;
-    return day - 1;
   };
 
   const getLastDaysOfPreviousMonth = (year, month, howManyDays) => {
@@ -73,41 +52,32 @@ const Calendar = ({ date, setDate, setSelectedDate, highlightDays = [] }) => {
   };
 
   const getDaysToDisplay = (year, month) => {
-    // Get the first day of the month
-    const firstDayOfMonth = getTrueDay(new Date(year, month, 1));
-
-    // Get list of the last days in the previous month (to fill the first row)
+    const firstDayOfMonth = getFirstDayOfMonth(year, month);
     const lastDaysOfPreviousMonth = getLastDaysOfPreviousMonth(year, month - 1, firstDayOfMonth);
-
-    // Get the bulk of the days in the current month
     const daysInMonth = getDaysInMonthAsArray(year, month);
-
-    // Merge first row with the bulk of the days
-    let days = [...lastDaysOfPreviousMonth, ...daysInMonth];
-
-    // Calculate how many days are needed to fill the last row
-    const daysFromNextMonth = 42 - days.length;
-
-    // Get the first days of the next month (to fill the last row)
+    const daysFromNextMonth = 42 - daysInMonth.length - lastDaysOfPreviousMonth.length;
     const firstDaysOfNextMonth = getFirstDaysOfNextMonth(year, month + 1, daysFromNextMonth);
+    return [...lastDaysOfPreviousMonth, ...daysInMonth, ...firstDaysOfNextMonth];
+  };
 
-    // Merge the last row with the bulk of the days
-    days = [...days, ...firstDaysOfNextMonth];
-    return days;
+  const isDateSelectable = (day) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Set current date to midnight
+    return day >= today;
   };
 
   return (
     <div className="minified-calendar">
       <div className="calendar-header">
         <div className="calendar-header-top">
-          <label className="month-button" onClick={() => changeMonth(currentMonth - 1)}>
-            {months[currentMonth - 1]}
+          <label className="month-button" onClick={gotoPreviousMonth}>
+            {months[currentMonth - 1 < 0 ? 11 : currentMonth - 1]}
           </label>
           <label className="month-label">
             {months[currentMonth]} {currentYear}
           </label>
-          <label className="month-button" onClick={() => changeMonth(currentMonth + 1)}>
-            {months[currentMonth + 1]}
+          <label className="month-button" onClick={gotoNextMonth}>
+            {months[currentMonth + 1 > 11 ? 0 : currentMonth + 1]}
           </label>
         </div>
         <div className="calendar-header-bottom">
@@ -122,12 +92,25 @@ const Calendar = ({ date, setDate, setSelectedDate, highlightDays = [] }) => {
         <div className="calendar-days">
           {days.map((day, index) => {
             const isCurrentMonth = day.getMonth() === currentMonth;
-            const highlight = new Date().getTime() < day.getTime() && highlightDays.includes(day.getTime());
+            const isSelectable = isDateSelectable(day);
+
             return (
               <div
                 key={`day-${index}`}
-                className={`calendar-day ${selectedDay === index ? "selected" : ""} ${!isCurrentMonth ? "disabled" : ""}${highlight ? " highlight" : ""}`}
-                onClick={() => setSelectedDay(index)}
+                className={`calendar-day ${isCurrentMonth ? "" : "disabled"} ${
+                  selectedDay === day.getDate() ? "selected" : ""
+                } ${highlightDays.includes(day.getTime()) ? "highlight" : ""} ${
+                  !isSelectable ? "not-selectable" : ""
+                }`}
+                onClick={() => {
+                  if (isCurrentMonth && isSelectable) {
+                    setSelectedDay(day.getDate());
+                    setDate(new Date(currentYear, currentMonth, day.getDate()));
+                    setSelectedDate(new Date(currentYear, currentMonth, day.getDate()));
+                  } else {
+                    window.alert("Valitse nykyinen tai tuleva varauksen päivämäärä.");
+                  }
+                }}
               >
                 <p>{day.getDate()}</p>
               </div>

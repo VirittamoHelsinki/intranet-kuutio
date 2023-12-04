@@ -18,6 +18,7 @@ app.use(express.json());
 app.use(express.static('dist'))
 
 // Middleware for handling CORS POLICY
+
 app.use(cors());
 
 // Middleware for logging requests
@@ -46,6 +47,7 @@ mongoose
     console.log('Kuutio app connected to database');
     app.listen(PORT, () => {
       logger.info(`Kuutio app is listening to port: ${PORT}`);
+      console.log(mongoUri)
     });
   })
   .catch((error) => {

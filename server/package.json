@@ -11,7 +11,7 @@
     "build:prod": "rm -rf dist && cd ../client && npm run build:prod && cp -r dist ../server/dist"
   },
   "keywords": [],
-  "author": "MamadTaheri68",
+  "author": "Abhishek Sharma",
   "license": "ISC",
   "dependencies": {
     "axios": "^1.5.0",

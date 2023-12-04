@@ -112,26 +112,7 @@ const BookingPage = () => {
                 ) : (
                   <div className="booking-column">
                     <BookingListPage />
-                    {/* {bookings
-                      .filter((b) => b.data !== null)
-                      .map((booking, index) => (
-                        <div className="booking-details" key={index}>
-                          <div className="time-label">
-                            <label>{booking.time}</label>
-                          </div>
-                          <div className="detail-content">
-                            <div className="name-label">
-                              <label>{fullName(booking.data.email)}</label>
-                            </div>
-                            <div className="topic-label">
-                              <label>{booking.data.topic}</label>
-                            </div>
-                            <div className="topic-label">
-                              <label>{booking.data.name}</label>
-                            </div>
-                          </div>
-                        </div>
-                      ))} */}
+                   
                   </div>
                 )}
               </div>
@@ -149,11 +130,6 @@ const BookingPage = () => {
               Palaa etusivulle
             </Link>
 
-            <Link to="/bookings">
-              <button className="homepage-button" >
-              Näytä varaukset
-              </button>
-            </Link>
           </div>
         </div>
       </div>
