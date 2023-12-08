@@ -12,7 +12,7 @@ RUN npm run install
 
  
 # Build the React app
-RUN npm run build:prod
+RUN npm run build:dev
 
 
 
@@ -20,4 +20,4 @@ RUN npm run build:prod
 EXPOSE 5024
 
 # Run the server
-CMD ["npm", "run", "start" ]
+CMD ["npm", "run", "dev" ]
