@@ -12,14 +12,19 @@ The application is intended for use by Virittämö Helsinki only.
 
 Clone the repository
 https://github.com/VirittamoHelsinki/intranet-kuutio.git
+
 Cd client
+
 npm install (For installing node_modules)
 
 cd server
+
 npm install (For installing no_modules)
 
 cd to the root
+
 npm run dev
+
 open browser: localhost:5024
 
 Note: You would also need the .env files both for client and server to run the application.
