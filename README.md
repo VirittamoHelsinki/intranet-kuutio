@@ -19,7 +19,7 @@ npm install (For installing node_modules)
 
 cd server
 
-npm install (For installing no_modules)
+npm install (For installing node_modules)
 
 cd to the root
 
