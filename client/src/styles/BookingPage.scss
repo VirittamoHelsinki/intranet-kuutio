@@ -128,7 +128,22 @@
                 line-height: 20px;
                 text-align: left;
                 padding: 0 15px;
-              }
+			}
+
+			select {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				width: 408px;
+				height: 50px;
+				font-family: "Inter", sans-serif;
+				font-style: normal;
+				font-weight: 500;
+				font-size: 15px;
+				line-height: 20px;
+				text-align: left;
+				padding: 0 15px;
+			  }
             }
 
             .selected-time {
@@ -443,7 +458,7 @@
   }
 }
 
-//Bookings card 
+//Bookings card
 
 .booking-cards {
   display: flex;
