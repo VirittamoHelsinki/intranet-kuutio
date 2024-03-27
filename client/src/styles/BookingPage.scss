@@ -57,8 +57,8 @@
             cursor: pointer;
 
             &.disabled {
-              color: #999999;
-              cursor: auto;
+				background: #ffffff;
+				color: #999999;
             }
           }
         }
