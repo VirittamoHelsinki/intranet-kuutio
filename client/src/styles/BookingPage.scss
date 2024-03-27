@@ -61,6 +61,10 @@
 				color: #999999;
 				cursor: not-allowed;
             }
+            &.selected {
+				background: #57aff6;
+              cursor: pointer;
+            }
           }
         }
       }
