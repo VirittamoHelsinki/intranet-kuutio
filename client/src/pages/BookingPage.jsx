@@ -134,9 +134,16 @@ const BookingPage = () => {
 
 					<div className="selected-time">
 						<label>Olet varaamassa klo</label>
-						<label>{selectedTime}</label>
 					</div>
+					{selectedTime
+					.sort()
+					.map((time, index) => (
+						<label key={index}>{time} - {endingTime({time})}
+							<br />
+						</label>
+					))}
 				</div>
+
 				) : (
 					<div className="booking-column">
 						<BookingListPage />
