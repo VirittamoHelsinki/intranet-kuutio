@@ -105,7 +105,7 @@ const BookingPage = () => {
 			<div className="times-row">
 				{bookings.map((booking, index) => {
 					const disabled = booking.data === null ? false : true;
-					const isClicked = selectedButton === booking.time;
+					const isClicked = selectedButton.includes(booking.time);
 					return (
 						<div
 						className={`time-box ${disabled ? " disabled" : ""}
@@ -153,7 +153,7 @@ const BookingPage = () => {
 							</select>
 						</div>
 
-					<div className="selected-time">
+					<div className="selected-time-header">
 						<label>Olet varaamassa klo</label>
 					</div>
 					{selectedTimes
