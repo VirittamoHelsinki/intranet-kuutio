@@ -54,6 +54,18 @@ const BookingPage = () => {
 	setNewBooking(true);
   };
 
+  const handleButtonUnClick = (booking) => {
+	const updatedTimes = selectedTimes.filter(time => time != booking.time);
+	setSelectedTimes(updatedTimes);
+
+	const updatedButtons = selectedButton.filter(button => button != booking.time);
+	setSelectedButton(updatedButtons);
+
+	if (updatedTimes.length == 0) {
+		setNewBooking(false);
+	}
+  };
+
   const endingTime = (time) => {
 	let [hour, minutes] = time.time.split(':').map(numString => parseInt(numString));
 
@@ -101,11 +113,11 @@ const BookingPage = () => {
 						key={index}
 						onClick={() => {
 							if (!disabled) {
-								if (selectedTime != booking.time) {
+								if (!selectedTimes.includes(booking.time)) {
 									handleButtonClick(booking);
 								}
 								else {
-									handleButtonUnClick();
+									handleButtonUnClick(booking);
 								}
 							}}}>
 							{booking.time}
