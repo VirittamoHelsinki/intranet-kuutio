@@ -14,7 +14,7 @@ const BookingPage = () => {
   const [topic, setTopic] = useState("");
   const [name, setName] = useState("");
   const [selectedTime, setSelectedTime] = useState([]);
-  const [bookings, setBookings] = useState(initTimes());
+  const [timeButtons, setTimeButtons] = useState(initTimes());
   const [showConfirmWindow, setShowConfirmWindow] = useState(false);
   const [showThanksWindow, setShowThanksWindow] = useState(false);
   const [selectedButton, setSelectedButton] = useState([]);
@@ -82,7 +82,7 @@ const BookingPage = () => {
   };
 
   useEffect(() => {
-	setBookings(initTimes());
+	setTimeButtons(initTimes());
 	setNewBooking(false);
 	setTopic("");
 	setName("");
@@ -103,9 +103,9 @@ const BookingPage = () => {
 			  </div>
 
 			<div className="times-row">
-				{bookings.map((booking, index) => {
-					const disabled = booking.data === null ? false : true;
-					const isClicked = selectedButton.includes(booking.time);
+				{timeButtons.map((button, index) => {
+					const disabled = button.data === null ? false : true;
+					const isClicked = selectedButton.includes(button.time);
 					return (
 						<div
 						className={`time-box ${disabled ? " disabled" : ""}
@@ -113,14 +113,14 @@ const BookingPage = () => {
 						key={index}
 						onClick={() => {
 							if (!disabled) {
-								if (!selectedTime.includes(booking.time)) {
-									handleButtonClick(booking);
+								if (!selectedTime.includes(button.time)) {
+									handleButtonClick(button);
 								}
 								else {
-									handleButtonUnClick(booking);
+									handleButtonUnClick(button);
 								}
 							}}}>
-							{booking.time}
+							{button.time}
 						</div>
 					);
 				})}
