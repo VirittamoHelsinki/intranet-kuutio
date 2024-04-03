@@ -49,15 +49,24 @@ const BookingPage = () => {
   };
 
   const handleButtonClick = (booking) => {
-	setSelectedButton(booking.time);
-	setSelectedTime(booking.time);
+	setSelectedTimes([...selectedTimes, booking.time]);
+	setSelectedButton([...selectedButton, booking.time]);
 	setNewBooking(true);
   };
 
-  const handleButtonUnClick = () => {
-	setSelectedButton(false);
-	setSelectedTime(null);
-	setNewBooking(false);
+  const endingTime = (time) => {
+	let [hour, minutes] = time.time.split(':').map(numString => parseInt(numString));
+
+	if (minutes == 30) {
+		minutes = 0;
+		hour++;
+	}
+	else {
+		minutes += 30;
+	}
+
+	const paddedMinutes = String(minutes).padStart(2, '0');
+	return `${hour}:${paddedMinutes}`
   };
 
   useEffect(() => {
@@ -138,8 +147,7 @@ const BookingPage = () => {
 					{selectedTimes
 					.sort()
 					.map((time, index) => (
-						<label key={index}>{time} - {endingTime({time})}
-							<br />
+						<label key={index} className='selected-time'>{time} - {endingTime({time})}
 						</label>
 					))}
 				</div>
