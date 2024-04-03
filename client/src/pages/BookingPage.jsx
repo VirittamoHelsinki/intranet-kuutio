@@ -13,7 +13,7 @@ const BookingPage = () => {
   const [newBooking, setNewBooking] = useState(false);
   const [topic, setTopic] = useState("");
   const [name, setName] = useState("");
-  const [selectedTimes, setSelectedTimes] = useState([]);
+  const [selectedTime, setSelectedTime] = useState([]);
   const [bookings, setBookings] = useState(initTimes());
   const [showConfirmWindow, setShowConfirmWindow] = useState(false);
   const [showThanksWindow, setShowThanksWindow] = useState(false);
@@ -26,7 +26,7 @@ const BookingPage = () => {
 	  topic,
 	  name,
 	  selectedDate,
-	  selectedTimes,
+	  selectedTime,
 	};
 	bookingApi
 	  .create(data)
@@ -49,14 +49,14 @@ const BookingPage = () => {
   };
 
   const handleButtonClick = (booking) => {
-	setSelectedTimes([...selectedTimes, booking.time]);
+	setSelectedTime([...selectedTime, booking.time]);
 	setSelectedButton([...selectedButton, booking.time]);
 	setNewBooking(true);
   };
 
   const handleButtonUnClick = (booking) => {
-	const updatedTimes = selectedTimes.filter(time => time != booking.time);
-	setSelectedTimes(updatedTimes);
+	const updatedTimes = selectedTime.filter(time => time != booking.time);
+	setSelectedTime(updatedTimes);
 
 	const updatedButtons = selectedButton.filter(button => button != booking.time);
 	setSelectedButton(updatedButtons);
@@ -113,7 +113,7 @@ const BookingPage = () => {
 						key={index}
 						onClick={() => {
 							if (!disabled) {
-								if (!selectedTimes.includes(booking.time)) {
+								if (!selectedTime.includes(booking.time)) {
 									handleButtonClick(booking);
 								}
 								else {
@@ -156,7 +156,7 @@ const BookingPage = () => {
 					<div className="selected-time-header">
 						<label>Olet varaamassa klo</label>
 					</div>
-					{selectedTimes
+					{selectedTime
 					.sort()
 					.map((time, index) => (
 						<label key={index} className='selected-time'>{time} - {endingTime({time})}
@@ -219,7 +219,7 @@ const BookingPage = () => {
 				<label>Aika:</label>
 			  </div>
 			  <div className="detail-value">
-				<label>{selectedTimes}</label>
+				<label>{selectedTime}</label>
 			  </div>
 			</div>
 		  </div>
