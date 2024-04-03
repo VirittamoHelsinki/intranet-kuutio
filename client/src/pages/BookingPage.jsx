@@ -4,7 +4,7 @@ import { fullName, initTimes } from "../features/functions";
 import Calendar from "../components/Calendar";
 import "../styles/BookingPage.scss";
 import bookingApi from "../api/booking";
-import BookingListPage from "./BookingListPage";
+import BookingListPage from "../components/BookingListPage";
 import { bookingTopics } from "../features/arrays";
 
 const BookingPage = () => {
