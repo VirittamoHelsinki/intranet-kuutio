@@ -13,11 +13,11 @@ const BookingPage = () => {
   const [newBooking, setNewBooking] = useState(false);
   const [topic, setTopic] = useState("");
   const [name, setName] = useState("");
-  const [selectedTime, setSelectedTime] = useState(null);
+  const [selectedTimes, setSelectedTimes] = useState([]);
   const [bookings, setBookings] = useState(initTimes());
   const [showConfirmWindow, setShowConfirmWindow] = useState(false);
   const [showThanksWindow, setShowThanksWindow] = useState(false);
-  const [selectedButton, setSelectedButton] = useState(false);
+  const [selectedButton, setSelectedButton] = useState([]);
 
   const options = { weekday: "long", year: "numeric", month: "long", day: "numeric" };
 
@@ -26,7 +26,7 @@ const BookingPage = () => {
 	  topic,
 	  name,
 	  selectedDate,
-	  selectedTime,
+	  selectedTimes,
 	};
 	bookingApi
 	  .create(data)
@@ -135,7 +135,7 @@ const BookingPage = () => {
 					<div className="selected-time">
 						<label>Olet varaamassa klo</label>
 					</div>
-					{selectedTime
+					{selectedTimes
 					.sort()
 					.map((time, index) => (
 						<label key={index}>{time} - {endingTime({time})}
@@ -199,7 +199,7 @@ const BookingPage = () => {
 				<label>Aika:</label>
 			  </div>
 			  <div className="detail-value">
-				<label>{selectedTime}</label>
+				<label>{selectedTimes}</label>
 			  </div>
 			</div>
 		  </div>
