@@ -18,6 +18,7 @@ const BookingPage = () => {
   const [showConfirmWindow, setShowConfirmWindow] = useState(false);
   const [showThanksWindow, setShowThanksWindow] = useState(false);
   const [selectedButton, setSelectedButton] = useState([]);
+  const [bookings, setBookings] = useState([]);
 
   const options = { weekday: "long", year: "numeric", month: "long", day: "numeric" };
 
@@ -166,7 +167,7 @@ const BookingPage = () => {
 
 				) : (
 					<div className="booking-column">
-						<BookingListPage />
+						<BookingListPage bookings={bookings} onBookingsUpdate={handleBookingsUpdate}/>
 					</div>
 				)}
 			  </div>
