@@ -252,11 +252,17 @@ const BookingPage = () => {
 			</div>
 		  </div>
 		  <div className="modal-buttons">
-			<button className="black-button" onClick={() => setShowThanksWindow(false)}>
+			<button className="black-button" onClick={() => {
+				setNewBooking(false);
+				setShowThanksWindow(false);
+			}}>
 			  Tee uusi varaus
 			</button>
 			<Link to="/">
-			  <button className="nocolor-button" onClick={() => setShowThanksWindow(false)}>
+			  <button className="nocolor-button" onClick={() => {
+				  setNewBooking(false);
+				  setShowThanksWindow(false);
+				}}>
 				Takaisin etusivulle
 			  </button>
 			</Link>
