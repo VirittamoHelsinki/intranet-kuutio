@@ -62,7 +62,7 @@
 				cursor: not-allowed;
             }
             &.selected {
-				background: #57aff6;
+				background: #90c2ec;
               cursor: pointer;
             }
           }
@@ -113,7 +113,7 @@
             flex-direction: column;
             justify-content: flex-start;
             width: 100%;
-            gap: 50px;
+            gap: 60px;
 
             .topic-content {
               display: flex;
@@ -140,19 +140,29 @@
 			}
             }
 
-            .selected-time {
+			label {
+				font-family: "Inter", sans-serif;
+				font-style: normal;
+				font-weight: 600;
+				font-size: 20px;
+				line-height: 2px;
+				text-align: center;
+			}
+
+			.selected-time {
+				margin-top: -5%;
+			}
+
+            .selected-time-header {
               display: flex;
               flex-direction: row;
               justify-content: center;
               gap: 5px;
 
-              label {
-                font-family: "Inter", sans-serif;
-                font-style: normal;
-                font-weight: 600;
-                font-size: 24px;
-                line-height: 20px;
-              }
+			  label {
+				  font-size: 24px;
+				  gap: 60px;
+			  }
             }
           }
 
