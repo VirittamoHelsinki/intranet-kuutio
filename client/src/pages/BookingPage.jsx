@@ -82,6 +82,24 @@ const BookingPage = () => {
 	return `${hour}:${paddedMinutes}`
   };
 
+  const disableBookedTimes = () => {
+	bookings.map(booking => {
+		const bookingDate = new Date(booking.selectedDate);
+		if (bookingDate.getTime() == selectedDate.getTime()) {
+			const time = booking.selectedTime[0]
+			const index = timeButtons.findIndex(button => button.time == time);
+
+			if (index !== -1) {
+				timeButtons[index].data = 'booked';
+			}
+		}
+	});
+};
+
+  const handleBookingsUpdate = (updatedBookings) => {
+	setBookings(updatedBookings);
+  };
+
   useEffect(() => {
 	setTimeButtons(initTimes());
 	setNewBooking(false);
@@ -104,6 +122,7 @@ const BookingPage = () => {
 			  </div>
 
 			<div className="times-row">
+				{ disableBookedTimes() }
 				{timeButtons.map((button, index) => {
 					const disabled = button.data === null ? false : true;
 					const isClicked = selectedButton.includes(button.time);
