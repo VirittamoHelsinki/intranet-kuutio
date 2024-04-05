@@ -5,24 +5,24 @@ import "../styles/Calendar.scss";
 const Calendar = ({ date, setDate, setSelectedDate, highlightDays = [] }) => {
   const [days, setDays] = useState([]);
   const [selectedDay, setSelectedDay] = useState(null);
-  const [currentMonth, setCurrentMonth] = useState(date.getMonth());
-  const [currentYear, setCurrentYear] = useState(date.getFullYear());
+  const [selectedMonth, setSelectedMonth] = useState(date.getMonth());
+  const [selectedYear, setSelectedYear] = useState(date.getFullYear());
   const [currentDay, setCurrentDay] = useState(date.getDate());
 
   useEffect(() => {
-    setCurrentMonth(date.getMonth());
-    setCurrentYear(date.getFullYear());
+    setSelectedMonth(date.getMonth());
+    setSelectedYear(date.getFullYear());
     setDays(getDaysToDisplay(date.getFullYear(), date.getMonth()));
     setSelectedDay(date.getDate());
   }, [date]);
 
   const gotoPreviousMonth = () => {
-    const newDate = new Date(currentYear, currentMonth - 1, 1);
+    const newDate = new Date(selectedYear, selectedMonth - 1, 1);
     setDate(newDate);
   };
 
   const gotoNextMonth = () => {
-    const newDate = new Date(currentYear, currentMonth + 1, 1);
+    const newDate = new Date(selectedYear, selectedMonth + 1, 1);
     setDate(newDate);
   };
 
@@ -72,13 +72,13 @@ const Calendar = ({ date, setDate, setSelectedDate, highlightDays = [] }) => {
       <div className="calendar-header">
         <div className="calendar-header-top">
           <label className="month-button" onClick={gotoPreviousMonth}>
-            {months[currentMonth - 1 < 0 ? 11 : currentMonth - 1]}
+            {months[selectedMonth - 1 < 0 ? 11 : selectedMonth - 1]}
           </label>
           <label className="month-label">
-            {months[currentMonth]} {currentYear}
+            {months[selectedMonth]} {selectedYear}
           </label>
           <label className="month-button" onClick={gotoNextMonth}>
-            {months[currentMonth + 1 > 11 ? 0 : currentMonth + 1]}
+            {months[selectedMonth + 1 > 11 ? 0 : selectedMonth + 1]}
           </label>
         </div>
         <div className="calendar-header-bottom">
@@ -92,7 +92,7 @@ const Calendar = ({ date, setDate, setSelectedDate, highlightDays = [] }) => {
       <div className="calendar-body">
         <div className="calendar-days">
           {days.map((day, index) => {
-            const isCurrentMonth = day.getMonth() === currentMonth;
+            const isCurrentMonth = day.getMonth() === selectedMonth;
             const isSelectable = isDateSelectable(day);
 			const isCurrentDay = day.getDate() === currentDay;
 
@@ -109,8 +109,8 @@ const Calendar = ({ date, setDate, setSelectedDate, highlightDays = [] }) => {
 			onClick={() => {
 				if (isCurrentMonth && isSelectable) {
 					setSelectedDay(day.getDate());
-                    setDate(new Date(currentYear, currentMonth, day.getDate()));
-                    setSelectedDate(new Date(currentYear, currentMonth, day.getDate()));
+                    setDate(new Date(selectedYear, selectedMonth, day.getDate()));
+                    setSelectedDate(new Date(selectedYear, selectedMonth, day.getDate()));
                   } else {
                     window.alert("Valitse nykyinen tai tuleva varauksen päivämäärä.");
                   }
