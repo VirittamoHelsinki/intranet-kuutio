@@ -4,7 +4,7 @@ import { fullName, initTimes } from "../features/functions";
 import Calendar from "../components/Calendar";
 import "../styles/BookingPage.scss";
 import bookingApi from "../api/booking";
-import BookingListPage from "./BookingListPage";
+import BookingListPage from "../components/BookingListPage";
 import { bookingTopics } from "../features/arrays";
 
 const BookingPage = () => {
@@ -13,10 +13,12 @@ const BookingPage = () => {
   const [newBooking, setNewBooking] = useState(false);
   const [topic, setTopic] = useState("");
   const [name, setName] = useState("");
-  const [selectedTime, setSelectedTime] = useState(null);
-  const [bookings, setBookings] = useState(initTimes());
+  const [selectedTime, setSelectedTime] = useState([]);
+  const [timeButtons, setTimeButtons] = useState(initTimes());
   const [showConfirmWindow, setShowConfirmWindow] = useState(false);
   const [showThanksWindow, setShowThanksWindow] = useState(false);
+  const [selectedButton, setSelectedButton] = useState([]);
+  const [bookings, setBookings] = useState([]);
 
   const options = { weekday: "long", year: "numeric", month: "long", day: "numeric" };
 
@@ -47,15 +49,71 @@ const BookingPage = () => {
 	// Fetch bookings logic (removed for simplicity)
   };
 
+  const handleButtonClick = (booking) => {
+	setSelectedTime([...selectedTime, booking.time]);
+	setSelectedButton([...selectedButton, booking.time]);
+	setNewBooking(true);
+  };
+
+  const handleButtonUnClick = (booking) => {
+	const updatedTimes = selectedTime.filter(time => time != booking.time);
+	setSelectedTime(updatedTimes);
+
+	const updatedButtons = selectedButton.filter(button => button != booking.time);
+	setSelectedButton(updatedButtons);
+
+	if (updatedTimes.length == 0) {
+		setNewBooking(false);
+	}
+  };
+
+  const endingTime = (time) => {
+	let [hour, minutes] = time.time.split(':').map(numString => parseInt(numString));
+
+	if (minutes == 30) {
+		minutes = 0;
+		hour++;
+	}
+	else {
+		minutes += 30;
+	}
+
+	const paddedMinutes = String(minutes).padStart(2, '0');
+	return `${hour}:${paddedMinutes}`
+  };
+
+  const disableBookedTimes = () => {
+	bookings.map(booking => {
+		const bookingDate = new Date(booking.selectedDate);
+		if (bookingDate.getTime() == selectedDate.getTime()) {
+			const time = booking.selectedTime[0]
+			const index = timeButtons.findIndex(button => button.time == time);
+
+			if (index !== -1) {
+				timeButtons[index].data = 'booked';
+			}
+		}
+	});
+};
+
+  const handleBookingsUpdate = (updatedBookings) => {
+	setBookings(updatedBookings);
+  };
+
   useEffect(() => {
-	setBookings(initTimes());
 	setNewBooking(false);
 	setTopic("");
 	setName("");
 	if (selectedDate) {
-	  fetchBookings();
+		setTimeButtons(initTimes());
+		setSelectedButton([]);
+		setSelectedTime([]);
+		fetchBookings();
 	}
-  }, [selectedDate]);
+	if (bookings.length > 0) {
+		disableBookedTimes();
+	}
+}, [bookings, selectedDate]);
 
   return (
 	<div className="bookingpage-main">
@@ -67,25 +125,33 @@ const BookingPage = () => {
 			  <div className="times-headline">
 				<label>Ajat</label>
 			  </div>
-			  <div className="times-row">
-				{bookings.map((booking, index) => {
-				  const disabled = booking.data === null ? false : true;
-				  return (
-					<div
-					  className={`time-box ${disabled ? " disabled" : ""}`}
-					  key={index}
-					  onClick={() => {
-						if (!disabled) {
-						  setSelectedTime(booking.time);
-						  setNewBooking(true);
-						}
-					  }}
-					>
-					  {booking.time}
-					</div>
-				  );
+
+			<div className="times-row">
+				{ disableBookedTimes() }
+				{timeButtons.map((button, index) => {
+					const disabled = button.data === null ? false : true;
+					const isClicked = selectedButton.includes(button.time);
+					return (
+						<div
+						className={`time-box ${disabled ? " disabled" : ""}
+						${(isClicked && !disabled) ? "selected" : ""}`}
+						key={index}
+						onClick={() => {
+							if (!disabled) {
+								if (!selectedTime.includes(button.time)) {
+									handleButtonClick(button);
+								}
+								else {
+									handleButtonUnClick(button);
+								}
+							}}}>
+							{button.time}
+						</div>
+					);
 				})}
-			  </div>
+
+			</div>
+
 			</div>
 		  )}
 		</div>
@@ -112,14 +178,20 @@ const BookingPage = () => {
 							</select>
 						</div>
 
-					<div className="selected-time">
+					<div className="selected-time-header">
 						<label>Olet varaamassa klo</label>
-						<label>{selectedTime}</label>
 					</div>
+					{selectedTime
+					.sort()
+					.map((time, index) => (
+						<label key={index} className='selected-time'>{time} - {endingTime({time})}
+						</label>
+					))}
 				</div>
+
 				) : (
 					<div className="booking-column">
-						<BookingListPage />
+						<BookingListPage bookings={bookings} onBookingsUpdate={handleBookingsUpdate}/>
 					</div>
 				)}
 			  </div>
@@ -204,11 +276,17 @@ const BookingPage = () => {
 			</div>
 		  </div>
 		  <div className="modal-buttons">
-			<button className="black-button" onClick={() => setShowThanksWindow(false)}>
+			<button className="black-button" onClick={() => {
+				setNewBooking(false);
+				setShowThanksWindow(false);
+			}}>
 			  Tee uusi varaus
 			</button>
 			<Link to="/">
-			  <button className="nocolor-button" onClick={() => setShowThanksWindow(false)}>
+			  <button className="nocolor-button" onClick={() => {
+				  setNewBooking(false);
+				  setShowThanksWindow(false);
+				}}>
 				Takaisin etusivulle
 			  </button>
 			</Link>

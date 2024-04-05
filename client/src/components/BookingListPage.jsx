@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import bookingApi from "../api/booking";
 import "../styles/BookingPage.scss";
 
-const BookingListPage = () => {
-  const [bookings, setBookings] = useState([]);
+const BookingListPage = ({ bookings, onBookingsUpdate }) => {
 
   useEffect(() => {
     // Fetch bookings from the backend when the component mounts
@@ -18,7 +17,7 @@ const BookingListPage = () => {
           return bookingDate >= currentDate;
         });
 
-        setBookings(filteredBookings);
+        onBookingsUpdate(filteredBookings);
       })
       .catch((error) => {
         console.error("Error fetching bookings:", error);
@@ -31,7 +30,7 @@ const BookingListPage = () => {
       .remove(id)
       .then(() => {
         // Update the state to reflect the removed booking
-        setBookings((prevBookings) => prevBookings.filter((booking) => booking._id !== id));
+        onBookingsUpdate((prevBookings) => prevBookings.filter((booking) => booking._id !== id));
       })
       .catch((error) => {
         console.error("Error removing booking:", error);
