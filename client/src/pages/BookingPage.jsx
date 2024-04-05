@@ -101,14 +101,19 @@ const BookingPage = () => {
   };
 
   useEffect(() => {
-	setTimeButtons(initTimes());
 	setNewBooking(false);
 	setTopic("");
 	setName("");
 	if (selectedDate) {
-	  fetchBookings();
+		setTimeButtons(initTimes());
+		setSelectedButton([]);
+		setSelectedTime([]);
+		fetchBookings();
 	}
-  }, [selectedDate]);
+	if (bookings.length > 0) {
+		disableBookedTimes();
+	}
+}, [bookings, selectedDate]);
 
   return (
 	<div className="bookingpage-main">
