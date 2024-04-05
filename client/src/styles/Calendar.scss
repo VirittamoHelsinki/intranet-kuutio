@@ -123,14 +123,14 @@
 		}
 
         &.selected {
-          p {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 43px;
-            height: 43px;
-            background: #e8f3fc;
-            border-radius: 50%;
+			p {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				width: 43px;
+				height: 43px;
+				background: rgb(248,150,190);
+				border-radius: 50%;
           }
         }
 
