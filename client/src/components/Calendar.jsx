@@ -7,7 +7,18 @@ const Calendar = ({ date, setDate, setSelectedDate, highlightDays = [] }) => {
   const [selectedDay, setSelectedDay] = useState(null);
   const [selectedMonth, setSelectedMonth] = useState(date.getMonth());
   const [selectedYear, setSelectedYear] = useState(date.getFullYear());
-  const [currentDay, setCurrentDay] = useState(date.getDate());
+
+  const currentDay = new Date().getDate();
+  const currentMonth = new Date().getMonth();
+  const currentYear = new Date().getFullYear();
+
+  const isDateToday = (date) => {
+	return (
+		currentYear === date.getFullYear() &&
+		currentMonth === date.getMonth() &&
+		currentDay === date.getDate()
+	);
+  };
 
   useEffect(() => {
     setSelectedMonth(date.getMonth());
@@ -94,7 +105,7 @@ const Calendar = ({ date, setDate, setSelectedDate, highlightDays = [] }) => {
           {days.map((day, index) => {
             const isCurrentMonth = day.getMonth() === selectedMonth;
             const isSelectable = isDateSelectable(day);
-			const isCurrentDay = day.getDate() === currentDay;
+			const isToday = isDateToday(day);
 
             return (
 				<div
@@ -103,7 +114,7 @@ const Calendar = ({ date, setDate, setSelectedDate, highlightDays = [] }) => {
 				${ isCurrentMonth ? "" : "disabled"}
 				${ selectedDay === day.getDate() ? "selected" : "" }
 				${ highlightDays.includes(day.getTime()) ? "highlight" : ""}
-				${ isCurrentMonth && isCurrentDay ? "today" : ""}
+				${ isToday ? "today" : ""}
 				${ !isSelectable ? "not-selectable" : "" }`
 			}
 			onClick={() => {
