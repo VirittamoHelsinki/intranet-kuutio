@@ -45,6 +45,11 @@ const Calendar = ({ date, setDate, setSelectedDate, highlightDays = [] }) => {
     setDate(newDate);
   };
 
+  const gotoToday = () => {
+	const today = new Date(currentYear, currentMonth, currentDay);
+	setDate(today);
+  };
+
   const getFirstDayOfMonth = (year, month) => {
     return new Date(year, month, 0).getDay();
   };
@@ -89,6 +94,7 @@ const Calendar = ({ date, setDate, setSelectedDate, highlightDays = [] }) => {
   return (
     <div className="minified-calendar">
       <div className="calendar-header">
+		<button className="today-button" onClick={gotoToday}>Tänään</button>
         <div className="calendar-header-top">
           <label className="month-button" onClick={gotoPreviousMonth}>
             {months[selectedMonth - 1 < 0 ? 11 : selectedMonth - 1]}
