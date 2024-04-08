@@ -46,7 +46,7 @@ const Calendar = ({ date, setDate, setSelectedDate, highlightDays = [] }) => {
   };
 
   const getFirstDayOfMonth = (year, month) => {
-    return new Date(year, month, 1).getDay();
+    return new Date(year, month, 0).getDay();
   };
 
   const getDaysInMonthAsArray = (year, month) => {
