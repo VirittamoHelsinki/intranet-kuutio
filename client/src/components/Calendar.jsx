@@ -20,6 +20,14 @@ const Calendar = ({ date, setDate, setSelectedDate, highlightDays = [] }) => {
 	);
   };
 
+  const isDateSelected = (date) => {
+	return (
+		selectedYear === date.getFullYear() &&
+		selectedMonth === date.getMonth() &&
+		selectedDay === date.getDate()
+	)
+  };
+
   useEffect(() => {
     setSelectedMonth(date.getMonth());
     setSelectedYear(date.getFullYear());
@@ -106,13 +114,14 @@ const Calendar = ({ date, setDate, setSelectedDate, highlightDays = [] }) => {
             const isCurrentMonth = day.getMonth() === selectedMonth;
             const isSelectable = isDateSelectable(day);
 			const isToday = isDateToday(day);
+			const isSelected = isDateSelected(day);
 
             return (
 				<div
                 key={`day-${index}`}
                 className={`calendar-day
 				${ isCurrentMonth ? "" : "disabled"}
-				${ selectedDay === day.getDate() ? "selected" : "" }
+				${ isSelected ? "selected" : "" }
 				${ highlightDays.includes(day.getTime()) ? "highlight" : ""}
 				${ isToday ? "today" : ""}
 				${ !isSelectable ? "not-selectable" : "" }`
