@@ -186,10 +186,12 @@ const BookingPage = () => {
 					<div className="selected-time-header">
 						<label>Olet varaamassa klo</label>
 					</div>
+					{/* change to show only the first time and ending time, not all -> 12.00 - 14.00 */}
+
 					{selectedTime
 					.sort()
 					.map((time, index) => (
-						<label key={index} className='selected-time'>{time} - {endingTime({time})}
+						<label key={index} className='selected-time'>{time} - {getEndingTime({time})}
 						</label>
 					))}
 				</div>
