@@ -58,18 +58,30 @@ const BookingPage = () => {
 	}
 };
 
+const isFirstOrLastTime = (time) => {
+	const firstTime = selectedTime[0];
+	const lastTime = selectedTime[selectedTime.length - 1];
+
+	return (time == firstTime || time == lastTime)
+};
+
 
   const handleButtonUnClick = (booking) => {
-	const updatedTimes = selectedTime.filter(time => time != booking.time);
-	setSelectedTime(updatedTimes);
+	if (isFirstOrLastTime(booking.time)) {
+		const updatedTimes = selectedTime.filter(time => time != booking.time);
+		setSelectedTime(updatedTimes);
 
-	if (updatedTimes.length == 0) {
-		setNewBooking(false);
+		if (updatedTimes.length == 0) {
+			setNewBooking(false);
+		}
+
+		const button = timeButtons.find((button) => button.time === booking.time);
+		if (button) {
+			button.data = 'available';
+		}
 	}
-
-	const button = timeButtons.find((button) => button.time === booking.time);
-	if (button) {
-		button.data = 'available';
+	else {
+		// add alert, middlebuttons are unselectable
 	}
   };
 
