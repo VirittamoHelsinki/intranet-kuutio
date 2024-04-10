@@ -66,6 +66,11 @@ const BookingPage = () => {
 	if (updatedTimes.length == 0) {
 		setNewBooking(false);
 	}
+
+	const button = timeButtons.find((button) => button.time === booking.time);
+	if (button) {
+		button.data = 'available';
+	}
   };
 
   const endingTime = (time) => {
