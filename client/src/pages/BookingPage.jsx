@@ -51,7 +51,13 @@ const BookingPage = () => {
   const handleButtonClick = (booking) => {
 	setSelectedTime([...selectedTime, booking.time]);
 	setNewBooking(true);
-  };
+
+	const button = timeButtons.find((button) => button.time === booking.time);
+	if (button) {
+		button.data = 'selected';
+	}
+};
+
 
   const handleButtonUnClick = (booking) => {
 	const updatedTimes = selectedTime.filter(time => time != booking.time);
