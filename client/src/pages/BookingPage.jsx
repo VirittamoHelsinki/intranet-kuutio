@@ -73,8 +73,15 @@ const BookingPage = () => {
 	}
   };
 
-  const endingTime = (time) => {
-	let [hour, minutes] = time.time.split(':').map(numString => parseInt(numString));
+  const getEndingTime = (time) => {
+	let hour, minutes;
+
+	if (typeof time === 'string') {
+		[hour, minutes] = time.split(':').map(numString => parseInt(numString));
+	}
+	else {
+		[hour, minutes] = time.time.split(':').map(numString => parseInt(numString));
+	}
 
 	if (minutes == 30) {
 		minutes = 0;
