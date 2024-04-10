@@ -102,6 +102,65 @@ const BookingPage = () => {
 	});
 };
 
+const getPreviousTime = (time) => {
+	let [hour, minutes] = time.split(':').map(numString => parseInt(numString));
+	if (minutes == 30) {
+		minutes = 0;
+	}
+	else {
+		minutes = 30;
+		hour--;
+	}
+
+	const paddedMinutes = String(minutes).padStart(2, '0');
+	const paddedHour = String(hour).padStart(2, '0');
+	return `${paddedHour}:${paddedMinutes}`
+};
+
+const openAdjacentTimes = () => {
+	selectedTime.sort();
+	const prevTime = getPreviousTime(selectedTime[0]);
+	const nextTime = getEndingTime(selectedTime[selectedTime.length - 1]);
+
+	timeButtons.map((button) => {
+		if ((button.time == prevTime ||
+			button.time == nextTime) &&
+			button.data == 'locked') {
+				button.data = 'available';
+			}
+	});
+};
+
+const disableNonAdjacentTimes = () => {
+	const buttonsSelected = selectedTime.length;
+
+	if (buttonsSelected) {
+		if (buttonsSelected < 4) {
+			timeButtons.map((button) => {
+				if (button.data != 'selected' &&
+					button.data != 'booked') {
+						button.data = 'locked';
+				}
+			});
+			openAdjacentTimes();
+		}
+		else {
+			timeButtons.map((button) => {
+				if (button.data == 'available') {
+						button.data = 'locked';
+					}
+			});
+		}
+	}
+	else {
+		timeButtons.map((button) => {
+			if (button.data != 'booked') {
+				button.data = 'available';
+			}
+		});
+	}
+};
+
   const handleBookingsUpdate = (updatedBookings) => {
 	setBookings(updatedBookings);
   };
@@ -133,6 +192,7 @@ const BookingPage = () => {
 
 			<div className="times-row">
 				{ disableBookedTimes() }
+				{ disableNonAdjacentTimes() }
 				{timeButtons.map((button, index) => {
 					const disabled = button.data === 'booked' || button.data === 'locked';
 					const isClicked = selectedTime.includes(button.time);
