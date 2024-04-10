@@ -92,8 +92,9 @@ const BookingPage = () => {
 	}
 
 	const paddedMinutes = String(minutes).padStart(2, '0');
-	return `${hour}:${paddedMinutes}`
-  };
+	const paddedHour = String(hour).padStart(2, '0');
+	return `${paddedHour}:${paddedMinutes}`
+};
 
   const disableBookedTimes = () => {
 	bookings.map(booking => {
