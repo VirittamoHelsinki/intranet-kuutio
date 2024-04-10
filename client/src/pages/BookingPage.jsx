@@ -17,7 +17,6 @@ const BookingPage = () => {
   const [timeButtons, setTimeButtons] = useState(initTimes());
   const [showConfirmWindow, setShowConfirmWindow] = useState(false);
   const [showThanksWindow, setShowThanksWindow] = useState(false);
-  const [selectedButton, setSelectedButton] = useState([]);
   const [bookings, setBookings] = useState([]);
 
   const options = { weekday: "long", year: "numeric", month: "long", day: "numeric" };
@@ -51,16 +50,12 @@ const BookingPage = () => {
 
   const handleButtonClick = (booking) => {
 	setSelectedTime([...selectedTime, booking.time]);
-	setSelectedButton([...selectedButton, booking.time]);
 	setNewBooking(true);
   };
 
   const handleButtonUnClick = (booking) => {
 	const updatedTimes = selectedTime.filter(time => time != booking.time);
 	setSelectedTime(updatedTimes);
-
-	const updatedButtons = selectedButton.filter(button => button != booking.time);
-	setSelectedButton(updatedButtons);
 
 	if (updatedTimes.length == 0) {
 		setNewBooking(false);
@@ -106,9 +101,8 @@ const BookingPage = () => {
 	setName("");
 	if (selectedDate) {
 		setTimeButtons(initTimes());
-		setSelectedButton([]);
 		setSelectedTime([]);
-		fetchBookings();
+		// fetchBookings();
 	}
 	if (bookings.length > 0) {
 		disableBookedTimes();
@@ -129,11 +123,11 @@ const BookingPage = () => {
 			<div className="times-row">
 				{ disableBookedTimes() }
 				{timeButtons.map((button, index) => {
-					const disabled = button.data === null ? false : true;
-					const isClicked = selectedButton.includes(button.time);
+					const isClicked = selectedTime.includes(button.time);
 					return (
 						<div
-						className={`time-box ${disabled ? " disabled" : ""}
+						className={`time-box
+						${disabled ? " disabled" : ""}
 						${(isClicked && !disabled) ? "selected" : ""}`}
 						key={index}
 						onClick={() => {
