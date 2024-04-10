@@ -134,6 +134,7 @@ const BookingPage = () => {
 			<div className="times-row">
 				{ disableBookedTimes() }
 				{timeButtons.map((button, index) => {
+					const disabled = button.data === 'booked' || button.data === 'locked';
 					const isClicked = selectedTime.includes(button.time);
 					return (
 						<div
