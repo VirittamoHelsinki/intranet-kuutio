@@ -182,9 +182,6 @@ const disableNonAdjacentTimes = () => {
 		setSelectedTime([]);
 		// fetchBookings();
 	}
-	if (bookings.length > 0) {
-		disableBookedTimes();
-	}
 }, [bookings, selectedDate]);
 
   return (
