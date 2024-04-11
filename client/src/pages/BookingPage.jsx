@@ -163,18 +163,22 @@ const lockAvailableTimes = () => {
 	});
 };
 
+const lockUnselectedTimes = () => {
+	timeButtons.map((button) => {
+		if (button.data != 'selected' &&
+			button.data != 'booked') {
+				button.data = 'locked';
+		}
+	});
+};
+
 const disableNonAdjacentTimes = () => {
 	const buttonsSelected = selectedTime.length;
 	const bookingLimit = 4;
 
 	if (buttonsSelected) {
 		if (buttonsSelected < bookingLimit) {
-			timeButtons.map((button) => {
-				if (button.data != 'selected' &&
-					button.data != 'booked') {
-						button.data = 'locked';
-				}
-			});
+			lockUnselectedTimes();
 			openAdjacentTimes();
 		}
 		else {
