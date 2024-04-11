@@ -172,6 +172,14 @@ const lockUnselectedTimes = () => {
 	});
 };
 
+const openUnbookedTimes = () => {
+	timeButtons.map((button) => {
+		if (button.data != 'booked') {
+			button.data = 'available';
+		}
+	});
+};
+
 const disableNonAdjacentTimes = () => {
 	const buttonsSelected = selectedTime.length;
 	const bookingLimit = 4;
@@ -186,11 +194,7 @@ const disableNonAdjacentTimes = () => {
 		}
 	}
 	else {
-		timeButtons.map((button) => {
-			if (button.data != 'booked') {
-				button.data = 'available';
-			}
-		});
+		openUnbookedTimes();
 	}
 };
 
