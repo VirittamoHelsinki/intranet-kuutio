@@ -96,6 +96,12 @@ const isFirstOrLastTime = (time) => {
 	  return [hour, minutes];
   };
 
+  const addTimePadding = (hour, minute) => {
+	  const paddedMinute = String(minute).padStart(2, '0');
+	  const paddedHour = String(hour).padStart(2, '0');
+	  return `${paddedHour}:${paddedMinute}`;
+  };
+
   const getEndingTime = (time) => {
 	let [hour, minutes] = parseHourMinutesFromTime(time);
 
@@ -106,10 +112,19 @@ const isFirstOrLastTime = (time) => {
 	else {
 		minutes += 30;
 	}
+	return addTimePadding(hour, minutes);
+};
 
-	const paddedMinutes = String(minutes).padStart(2, '0');
-	const paddedHour = String(hour).padStart(2, '0');
-	return `${paddedHour}:${paddedMinutes}`
+const getPreviousTime = (time) => {
+	let [hour, minutes] = parseHourMinutesFromTime(time);
+	if (minutes == 30) {
+		minutes = 0;
+	}
+	else {
+		minutes = 30;
+		hour--;
+	}
+	return addTimePadding(hour, minutes);
 };
 
   const disableBookedTimes = () => {
@@ -124,21 +139,6 @@ const isFirstOrLastTime = (time) => {
 			}
 		}
 	});
-};
-
-const getPreviousTime = (time) => {
-	let [hour, minutes] = parseHourMinutesFromTime(time);
-	if (minutes == 30) {
-		minutes = 0;
-	}
-	else {
-		minutes = 30;
-		hour--;
-	}
-
-	const paddedMinutes = String(minutes).padStart(2, '0');
-	const paddedHour = String(hour).padStart(2, '0');
-	return `${paddedHour}:${paddedMinutes}`
 };
 
 const openAdjacentTimes = () => {
