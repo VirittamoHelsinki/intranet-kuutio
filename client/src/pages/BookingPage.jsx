@@ -155,6 +155,14 @@ const openAdjacentTimes = () => {
 	});
 };
 
+const lockAvailableTimes = () => {
+	timeButtons.map((button) => {
+		if (button.data == 'available') {
+				button.data = 'locked';
+			}
+	});
+};
+
 const disableNonAdjacentTimes = () => {
 	const buttonsSelected = selectedTime.length;
 
@@ -169,11 +177,7 @@ const disableNonAdjacentTimes = () => {
 			openAdjacentTimes();
 		}
 		else {
-			timeButtons.map((button) => {
-				if (button.data == 'available') {
-						button.data = 'locked';
-					}
-			});
+			lockAvailableTimes();
 		}
 	}
 	else {
