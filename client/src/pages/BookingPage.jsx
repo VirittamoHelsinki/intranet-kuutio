@@ -85,15 +85,19 @@ const isFirstOrLastTime = (time) => {
 	}
   };
 
-  const getEndingTime = (time) => {
-	let hour, minutes;
+  const parseHourMinutesFromTime = (time) => {
+	  let hour, minutes;
+	  if (typeof time === 'string') {
+		  [hour, minutes] = time.split(':').map(numString => parseInt(numString));
+	  }
+	  else {
+		  [hour, minutes] = time.time.split(':').map(numString => parseInt(numString));
+	  }
+	  return [hour, minutes];
+  };
 
-	if (typeof time === 'string') {
-		[hour, minutes] = time.split(':').map(numString => parseInt(numString));
-	}
-	else {
-		[hour, minutes] = time.time.split(':').map(numString => parseInt(numString));
-	}
+  const getEndingTime = (time) => {
+	let [hour, minutes] = parseHourMinutesFromTime(time);
 
 	if (minutes == 30) {
 		minutes = 0;
@@ -123,7 +127,7 @@ const isFirstOrLastTime = (time) => {
 };
 
 const getPreviousTime = (time) => {
-	let [hour, minutes] = time.split(':').map(numString => parseInt(numString));
+	let [hour, minutes] = parseHourMinutesFromTime(time);
 	if (minutes == 30) {
 		minutes = 0;
 	}
