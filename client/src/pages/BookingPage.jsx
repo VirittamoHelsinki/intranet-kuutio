@@ -165,9 +165,10 @@ const lockAvailableTimes = () => {
 
 const disableNonAdjacentTimes = () => {
 	const buttonsSelected = selectedTime.length;
+	const bookingLimit = 4;
 
 	if (buttonsSelected) {
-		if (buttonsSelected < 4) {
+		if (buttonsSelected < bookingLimit) {
 			timeButtons.map((button) => {
 				if (button.data != 'selected' &&
 					button.data != 'booked') {
