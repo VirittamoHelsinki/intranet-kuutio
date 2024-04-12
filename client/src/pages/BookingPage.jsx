@@ -6,7 +6,8 @@ import "../styles/BookingPage.scss";
 import bookingApi from "../api/booking";
 import BookingListPage from "../components/BookingListPage";
 import { bookingTopics } from "../features/arrays";
-import { disableBookedTimes } from "../components/BookingPageFunctions";
+import { disableBookedTimes, getEndingTime,
+		disableNonAdjacentTimes } from "../components/BookingPageFunctions";
 
 const BookingPage = () => {
   const [date, setDate] = useState(new Date());
@@ -66,7 +67,6 @@ const isFirstOrLastTime = (time) => {
 	return (time == firstTime || time == lastTime)
 };
 
-
   const handleButtonUnClick = (booking) => {
 	if (isFirstOrLastTime(booking.time)) {
 		const updatedTimes = selectedTime.filter(time => time != booking.time);
@@ -85,105 +85,6 @@ const isFirstOrLastTime = (time) => {
 		// add alert, middlebuttons are unselectable
 	}
   };
-
-  const parseHourMinutesFromTime = (time) => {
-	  let hour, minutes;
-	  if (typeof time === 'string') {
-		  [hour, minutes] = time.split(':').map(numString => parseInt(numString));
-	  }
-	  else {
-		  [hour, minutes] = time.time.split(':').map(numString => parseInt(numString));
-	  }
-	  return [hour, minutes];
-  };
-
-  const addTimePadding = (hour, minute) => {
-	  const paddedMinute = String(minute).padStart(2, '0');
-	  const paddedHour = String(hour).padStart(2, '0');
-	  return `${paddedHour}:${paddedMinute}`;
-  };
-
-  const getEndingTime = (time) => {
-	let [hour, minutes] = parseHourMinutesFromTime(time);
-
-	if (minutes == 30) {
-		minutes = 0;
-		hour++;
-	}
-	else {
-		minutes += 30;
-	}
-	return addTimePadding(hour, minutes);
-};
-
-const getPreviousTime = (time) => {
-	let [hour, minutes] = parseHourMinutesFromTime(time);
-	if (minutes == 30) {
-		minutes = 0;
-	}
-	else {
-		minutes = 30;
-		hour--;
-	}
-	return addTimePadding(hour, minutes);
-};
-
-const openAdjacentTimes = () => {
-	selectedTime.sort();
-	const prevTime = getPreviousTime(selectedTime[0]);
-	const nextTime = getEndingTime(selectedTime[selectedTime.length - 1]);
-
-	timeButtons.map((button) => {
-		if ((button.time == prevTime ||
-			button.time == nextTime) &&
-			button.data == 'locked') {
-				button.data = 'available';
-			}
-	});
-};
-
-const lockAvailableTimes = () => {
-	timeButtons.map((button) => {
-		if (button.data == 'available') {
-				button.data = 'locked';
-			}
-	});
-};
-
-const lockUnselectedTimes = () => {
-	timeButtons.map((button) => {
-		if (button.data != 'selected' &&
-			button.data != 'booked') {
-				button.data = 'locked';
-		}
-	});
-};
-
-const openUnbookedTimes = () => {
-	timeButtons.map((button) => {
-		if (button.data != 'booked') {
-			button.data = 'available';
-		}
-	});
-};
-
-const disableNonAdjacentTimes = () => {
-	const buttonsSelected = selectedTime.length;
-	const bookingLimit = 4;
-
-	if (buttonsSelected) {
-		if (buttonsSelected < bookingLimit) {
-			lockUnselectedTimes();
-			openAdjacentTimes();
-		}
-		else {
-			lockAvailableTimes();
-		}
-	}
-	else {
-		openUnbookedTimes();
-	}
-};
 
   const handleBookingsUpdate = (updatedBookings) => {
 	setBookings(updatedBookings);
@@ -213,7 +114,7 @@ const disableNonAdjacentTimes = () => {
 
 			<div className="times-row">
 				{ disableBookedTimes(bookings, selectedDate, timeButtons) }
-				{ disableNonAdjacentTimes() }
+				{ disableNonAdjacentTimes(selectedTime, timeButtons) }
 				{timeButtons.map((button, index) => {
 					const disabled = button.data === 'booked' || button.data === 'locked';
 					const isClicked = selectedTime.includes(button.time);
