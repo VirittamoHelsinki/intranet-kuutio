@@ -1,5 +1,5 @@
-import { disableBookedTimes, disableNonAdjacentTimes,
-	handleButtonUnClick, handleButtonClick }
+import { handleButtonUnClick, handleButtonClick,
+	updateTimeButtonAvailability }
 		from "../components/TimeButtonFunctions";
 
 const TimeButton = ( {bookings, selectedDate, timeButtons, selectedTime, setSelectedTime, setNewBooking} ) => {
@@ -10,8 +10,7 @@ return (
 		</div>
 
 		<div className="times-row">
-			{ disableBookedTimes(bookings, selectedDate, timeButtons) }
-			{ disableNonAdjacentTimes(selectedTime, timeButtons) }
+			{ updateTimeButtonAvailability(bookings, selectedDate, selectedTime, timeButtons) }
 			{timeButtons.map((button, index) => {
 				const disabled = button.data === 'booked' || button.data === 'locked';
 				const isClicked = selectedTime.includes(button.time);

@@ -98,7 +98,7 @@ const openUnbookedTimes = (timeButtons) => {
 	});
 };
 
-export const disableNonAdjacentTimes = (selectedTime, timeButtons) => {
+const disableNonAdjacentTimes = (selectedTime, timeButtons) => {
 	const buttonsSelected = selectedTime.length;
 	const bookingLimit = 4;
 
@@ -114,6 +114,11 @@ export const disableNonAdjacentTimes = (selectedTime, timeButtons) => {
 	else {
 		openUnbookedTimes(timeButtons);
 	}
+};
+
+export const updateTimeButtonAvailability = (bookings, selectedDate, selectedTime, timeButtons) => {
+	disableBookedTimes(bookings, selectedDate, timeButtons);
+	disableNonAdjacentTimes(selectedTime, timeButtons);
 };
 
 const isFirstOrLastTime = (time, selectedTime) => {
