@@ -6,9 +6,8 @@ import "../styles/BookingPage.scss";
 import bookingApi from "../api/booking";
 import BookingListPage from "../components/BookingListPage";
 import { bookingTopics } from "../features/arrays";
-import { disableBookedTimes, getEndingTime,
-		disableNonAdjacentTimes, handleButtonUnClick,
-		handleButtonClick } from "../components/BookingPageFunctions";
+import { getEndingTime } from "../components/BookingPageFunctions";
+import TimeButton from "../components/TimeButton";
 
 const BookingPage = () => {
   const [date, setDate] = useState(new Date());
@@ -71,44 +70,10 @@ const BookingPage = () => {
 	  <div className="bookingpage-content">
 		<div className="calendar-times-content">
 		  <Calendar date={date} setDate={setDate} setSelectedDate={setSelectedDate} />
-		  {selectedDate && (
-			<div className="times-content">
-			  <div className="times-headline">
-				<label>Ajat</label>
-			  </div>
-
-			<div className="times-row">
-				{ disableBookedTimes(bookings, selectedDate, timeButtons) }
-				{ disableNonAdjacentTimes(selectedTime, timeButtons) }
-				{timeButtons.map((button, index) => {
-					const disabled = button.data === 'booked' || button.data === 'locked';
-					const isClicked = selectedTime.includes(button.time);
-					return (
-						<div
-						className={`time-box
-						${disabled ? " disabled" : ""}
-						${(isClicked && !disabled) ? "selected" : ""}`}
-						key={index}
-						onClick={() => {
-							if (!disabled) {
-								if (!selectedTime.includes(button.time)) {
-									handleButtonClick(button, selectedTime, timeButtons,
-													setSelectedTime, setNewBooking);
-								}
-								else {
-									handleButtonUnClick(button, selectedTime, timeButtons,
-													setSelectedTime, setNewBooking);
-								}
-							}}}>
-							{button.time}
-						</div>
-					);
-				})}
-
-			</div>
-
-			</div>
-		  )}
+		  {selectedDate &&
+			<TimeButton bookings={bookings} selectedDate={selectedDate}
+		  			timeButtons={timeButtons} selectedTime={selectedTime}
+					setSelectedTime={setSelectedTime} setNewBooking={setNewBooking} />}
 		</div>
 		<div className="booking-content">
 		  <div className="booking-data-content">
