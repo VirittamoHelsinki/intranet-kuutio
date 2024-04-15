@@ -1,6 +1,6 @@
 import { disableBookedTimes, disableNonAdjacentTimes,
 	handleButtonUnClick, handleButtonClick }
-		from "../components/BookingPageFunctions";
+		from "../components/TimeButtonFunctions";
 
 const TimeButton = ( {bookings, selectedDate, timeButtons, selectedTime, setSelectedTime, setNewBooking} ) => {
 return (

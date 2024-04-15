@@ -6,7 +6,7 @@ import "../styles/BookingPage.scss";
 import bookingApi from "../api/booking";
 import BookingListPage from "../components/BookingListPage";
 import { bookingTopics } from "../features/arrays";
-import { getEndingTime } from "../components/BookingPageFunctions";
+import { getEndingTime } from "../components/TimeButtonFunctions";
 import TimeButton from "../components/TimeButton";
 
 const BookingPage = () => {
