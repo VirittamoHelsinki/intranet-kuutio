@@ -7,7 +7,8 @@ import bookingApi from "../api/booking";
 import BookingListPage from "../components/BookingListPage";
 import { bookingTopics } from "../features/arrays";
 import { disableBookedTimes, getEndingTime,
-		disableNonAdjacentTimes } from "../components/BookingPageFunctions";
+		disableNonAdjacentTimes, handleButtonUnClick,
+		handleButtonClick } from "../components/BookingPageFunctions";
 
 const BookingPage = () => {
   const [date, setDate] = useState(new Date());
@@ -48,42 +49,6 @@ const BookingPage = () => {
 
   const fetchBookings = () => {
 	// Fetch bookings logic (removed for simplicity)
-  };
-
-  const handleButtonClick = (booking) => {
-	setSelectedTime([...selectedTime, booking.time]);
-	setNewBooking(true);
-
-	const button = timeButtons.find((button) => button.time === booking.time);
-	if (button) {
-		button.data = 'selected';
-	}
-};
-
-const isFirstOrLastTime = (time) => {
-	const firstTime = selectedTime[0];
-	const lastTime = selectedTime[selectedTime.length - 1];
-
-	return (time == firstTime || time == lastTime)
-};
-
-  const handleButtonUnClick = (booking) => {
-	if (isFirstOrLastTime(booking.time)) {
-		const updatedTimes = selectedTime.filter(time => time != booking.time);
-		setSelectedTime(updatedTimes);
-
-		if (updatedTimes.length == 0) {
-			setNewBooking(false);
-		}
-
-		const button = timeButtons.find((button) => button.time === booking.time);
-		if (button) {
-			button.data = 'available';
-		}
-	}
-	else {
-		// add alert, middlebuttons are unselectable
-	}
   };
 
   const handleBookingsUpdate = (updatedBookings) => {
@@ -127,10 +92,12 @@ const isFirstOrLastTime = (time) => {
 						onClick={() => {
 							if (!disabled) {
 								if (!selectedTime.includes(button.time)) {
-									handleButtonClick(button);
+									handleButtonClick(button, selectedTime, timeButtons,
+													setSelectedTime, setNewBooking);
 								}
 								else {
-									handleButtonUnClick(button);
+									handleButtonUnClick(button, selectedTime, timeButtons,
+													setSelectedTime, setNewBooking);
 								}
 							}}}>
 							{button.time}

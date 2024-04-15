@@ -115,3 +115,39 @@ export const disableNonAdjacentTimes = (selectedTime, timeButtons) => {
 		openUnbookedTimes(timeButtons);
 	}
 };
+
+const isFirstOrLastTime = (time, selectedTime) => {
+	const firstTime = selectedTime[0];
+	const lastTime = selectedTime[selectedTime.length - 1];
+
+	return (time == firstTime || time == lastTime)
+};
+
+export const handleButtonUnClick = (booking, selectedTime, timeButtons, setSelectedTime, setNewBooking) => {
+	if (isFirstOrLastTime(booking.time, selectedTime)) {
+		const updatedTimes = selectedTime.filter(time => time != booking.time);
+		setSelectedTime(updatedTimes);
+
+		if (updatedTimes.length == 0) {
+			setNewBooking(false);
+		}
+
+		const button = timeButtons.find((button) => button.time === booking.time);
+		if (button) {
+			button.data = 'available';
+		}
+	}
+	else {
+		// add alert, select only first/last time
+	}
+  };
+
+  export const handleButtonClick = (booking, selectedTime, timeButtons, setSelectedTime, setNewBooking) => {
+	setSelectedTime([...selectedTime, booking.time]);
+	setNewBooking(true);
+
+	const button = timeButtons.find((button) => button.time === booking.time);
+	if (button) {
+		button.data = 'selected';
+	}
+};
