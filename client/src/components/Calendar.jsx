@@ -48,6 +48,7 @@ const Calendar = ({ date, setDate, setSelectedDate, highlightDays = [] }) => {
   const gotoToday = () => {
 	const today = new Date(currentYear, currentMonth, currentDay);
 	setDate(today);
+	setSelectedDate(today);
   };
 
   const getFirstDayOfMonth = (year, month) => {
