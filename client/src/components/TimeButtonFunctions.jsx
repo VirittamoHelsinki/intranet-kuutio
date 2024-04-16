@@ -1,12 +1,16 @@
+
 export const disableBookedTimes = (bookings, selectedDate, timeButtons) => {
 	bookings.map(booking => {
 		const bookingDate = new Date(booking.selectedDate);
 		if (bookingDate.getTime() == selectedDate.getTime()) {
 			const time = booking.selectedTime[0]
 			const index = timeButtons.findIndex(button => button.time == time);
+			const bookingSize = booking.selectedTime.length;
 
-			if (index !== -1) {
-				timeButtons[index].data = 'booked';
+			for (let i = 0; i < bookingSize; i++) {
+				if (index !== -1) {
+					timeButtons[index + i].data = 'booked';
+				}
 			}
 		}
 	});
