@@ -23,12 +23,18 @@ const BookingPage = () => {
 
   const options = { weekday: "long", year: "numeric", month: "long", day: "numeric" };
 
+let endingTime = null;
+if (selectedTime.length > 0) {
+	endingTime = getEndingTime(selectedTime.sort()[selectedTime.length - 1]);
+}
+
   const createBooking = () => {
 	const data = {
 	  topic,
 	  name,
 	  selectedDate,
 	  selectedTime,
+	  endingTime,
 	};
 	bookingApi
 	  .create(data)
@@ -102,9 +108,7 @@ const BookingPage = () => {
 						<label>Olet varaamassa klo</label>
 					</div>
 					<label>
-						{selectedTime.sort()[0] +
-						' - ' +
-						getEndingTime(selectedTime[selectedTime.length - 1])}
+						{selectedTime.sort()[0] + ' - ' + endingTime }
 					</label>
 				</div>
 
@@ -163,7 +167,9 @@ const BookingPage = () => {
 				<label>Aika:</label>
 			  </div>
 			  <div className="detail-value">
-				<label>{selectedTime}</label>
+				<label>
+					{ selectedTime[0] + ' - ' + endingTime }
+				</label>
 			  </div>
 			</div>
 		  </div>
