@@ -18,6 +18,10 @@ const bookingSchema = mongoose.Schema(
       type: [String],
       required: true,
     },
+    endingTime: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: true,

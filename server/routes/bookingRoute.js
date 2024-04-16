@@ -14,10 +14,11 @@ router.post('/', async (request, response) => {
       !request.body.topic ||
       !request.body.name ||
       !request.body.selectedDate ||
-      !request.body.selectedTime
+      !request.body.selectedTime ||
+	  !request.body.endingTime
     ) {
       return response.status(400).send({
-        message: 'Send all required fields: topic, name, date, time',
+        message: 'Send all required fields: topic, name, date, time, endingtime',
       });
     }
     const newBooking = {
@@ -25,6 +26,7 @@ router.post('/', async (request, response) => {
       name: request.body.name,
       selectedDate: request.body.selectedDate,
       selectedTime: request.body.selectedTime,
+	  endingTime: request.body.endingTime,
     };
 
     const booking = await Booking.create(newBooking);
@@ -60,7 +62,7 @@ router.delete('/:id', async (request, response) => {
 
     if (booking) {
       await Booking.findByIdAndRemove(request.params.id);
-      
+
       response.status(200).send({ message: 'Booking removed' });
     } else {
       response.status(404).send({ message: 'Booking not found' });
