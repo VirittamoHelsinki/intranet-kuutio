@@ -51,7 +51,7 @@ const BookingListPage = ({ bookings, onBookingsUpdate }) => {
               <strong>Päivämäärä: </strong>{" "}
               {new Date(booking.selectedDate).toLocaleDateString()}
               <br />
-              <strong>Aika: </strong> {booking.selectedTime}
+              <strong>Aika: </strong> {booking.selectedTime[0]} - { booking.endingTime }
             </div>
             <button onClick={() => handleRemoveBooking(booking._id)}>
               Poista varaus
