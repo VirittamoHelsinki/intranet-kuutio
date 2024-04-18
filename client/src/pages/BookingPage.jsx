@@ -20,6 +20,7 @@ const BookingPage = () => {
   const [showConfirmWindow, setShowConfirmWindow] = useState(false);
   const [showThanksWindow, setShowThanksWindow] = useState(false);
   const [bookings, setBookings] = useState([]);
+  const [regularBooking, setRegularBooking] = useState(false);
 
   const options = { weekday: "long", year: "numeric", month: "long", day: "numeric" };
 
@@ -27,6 +28,10 @@ let endingTime = null;
 if (selectedTime.length > 0) {
 	endingTime = getEndingTime(selectedTime.sort()[selectedTime.length - 1]);
 }
+
+const handleRegularBooking = () => {
+	setRegularBooking(!regularBooking);
+};
 
   const createBooking = () => {
 	const data = {
@@ -67,6 +72,7 @@ if (selectedTime.length > 0) {
 	if (selectedDate) {
 		setTimeButtons(initTimes());
 		setSelectedTime([]);
+		setRegularBooking(false);
 		// fetchBookings();
 	}
 }, [bookings, selectedDate]);
@@ -110,6 +116,16 @@ if (selectedTime.length > 0) {
 					<label>
 						{selectedTime.sort()[0] + ' - ' + endingTime }
 					</label>
+					<div className='regular-booking'>
+						<input type="checkbox"
+						onClick={() => handleRegularBooking()}
+						id='regular-booking-checkbox'/>
+						<label
+						htmlFor='regular-booking-checkbox'>
+							Jatkuva varaus
+						</label>
+					</div>
+
 				</div>
 
 				) : (
