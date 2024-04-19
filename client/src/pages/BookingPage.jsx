@@ -8,6 +8,7 @@ import BookingListPage from "../components/BookingListPage";
 import { bookingTopics } from "../features/arrays";
 import { getEndingTime } from "../components/TimeButtonFunctions";
 import TimeButton from "../components/TimeButton";
+import RegularBooking from "../components/RegularBooking";
 
 const BookingPage = () => {
   const [date, setDate] = useState(new Date());
@@ -125,6 +126,12 @@ const handleRegularBooking = () => {
 							Jatkuva varaus
 						</label>
 					</div>
+
+					{ regularBooking && (
+						<RegularBooking selectedDate={selectedDate}
+										selectedTime={selectedTime}
+										bookings={bookings} />
+					) }
 
 				</div>
 

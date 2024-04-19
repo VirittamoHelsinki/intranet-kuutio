@@ -149,6 +149,54 @@
 				text-align: center;
 			}
 
+			.regular-booking {
+				display: flex;
+				margin-left: 6%;
+				justify-content: center;
+				align-items: center;
+				padding-right: 45px;
+
+				input {
+					margin-right: 10px;
+					width: 24px;
+					height: 24px;
+				}
+			}
+
+			.regular-booking-container {
+				display: flex;
+				flex-direction: column;
+				justify-content: center ;
+				padding: 10px;
+				margin: 10px;
+
+			.regular-booking-form {
+				display: flex;
+				flex-direction: row;
+				justify-content: center;
+				align-items: space-around;
+
+				label {
+					margin-top: 17px;
+					margin-left: 5px;
+				}
+			}
+
+				#regular-len {
+					width: 50px;
+					height: 30px;
+					font-size: 16px;
+					font-weight: bolder;
+					text-align: center;
+				}
+
+				#regular-len::-webkit-inner-spin-button,
+				#regular-len::-webkit-outer-spin-button {
+					height: 30px;
+				}
+
+			}
+
 			.selected-time {
 				margin-top: -5%;
 			}
@@ -453,7 +501,7 @@
           .booking-data {
             align-items: center;
             .booking-column {
-              width: 45%;
+              width: 40%;
             }
           }
         }

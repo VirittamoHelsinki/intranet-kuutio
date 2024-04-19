@@ -1,0 +1,18 @@
+.booking-collision-info {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+
+	.booking-length {
+		text-align: start;
+	}
+
+	.booking-collision {
+		display: flex;
+		padding: 5px;
+		justify-content: center;
+		color: red;
+	}
+
+}
