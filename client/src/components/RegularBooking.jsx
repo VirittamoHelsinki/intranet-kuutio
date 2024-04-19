@@ -47,7 +47,7 @@ const RegularBooking = ({ selectedDate, selectedTime, bookings, onRegularLengthC
 
 			if (checkCollision(bookings, dateToCheck)) {
 				setLenAvailable(daysAvailable);
-				setTimeFormat(daysAvailable == 1 ? 'arkipäivä' : 'arkipäivää');
+				onTimeformatChange(daysAvailable == 1 ? 'arkipäivä' : 'arkipäivää');
 				collisionFound = true;
 				return ;
 			}
@@ -58,7 +58,7 @@ const RegularBooking = ({ selectedDate, selectedTime, bookings, onRegularLengthC
 		}
 		if (!collisionFound) {
 			setLenAvailable(daysAvailable);
-			setTimeFormat(daysAvailable == 1 ? 'arkipäivä' : 'arkipäivää');
+			onTimeformatChange(daysAvailable == 1 ? 'arkipäivä' : 'arkipäivää');
 			setCollision(null);
 		}
 	};
@@ -93,7 +93,7 @@ const RegularBooking = ({ selectedDate, selectedTime, bookings, onRegularLengthC
 
 			if (checkCollision(bookings, dateToCheck)) {
 				setLenAvailable(weeksAvailable);
-				setTimeFormat(weeksAvailable == 1 ? 'viikko' : 'viikkoa');
+				onTimeformatChange(weeksAvailable == 1 ? 'viikko' : 'viikkoa');
 				collisionFound = true;
 				return ;
 			}
@@ -104,7 +104,7 @@ const RegularBooking = ({ selectedDate, selectedTime, bookings, onRegularLengthC
 		};
 		if (!collisionFound) {
 			setLenAvailable(weeksAvailable);
-			setTimeFormat(weeksAvailable == 1 ? 'viikko' : 'viikkoa');
+			onTimeformatChange(weeksAvailable == 1 ? 'viikko' : 'viikkoa');
 			setCollision(null);
 		}
 	};
