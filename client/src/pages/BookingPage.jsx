@@ -22,6 +22,9 @@ const BookingPage = () => {
   const [showThanksWindow, setShowThanksWindow] = useState(false);
   const [bookings, setBookings] = useState([]);
   const [regularBooking, setRegularBooking] = useState(false);
+  const [regularBookingLength, setRegularBookingLength] = useState(1);
+  const [regularBookingTimeformat, setRegularBookingTimeformat] = useState(null);
+
 
   const options = { weekday: "long", year: "numeric", month: "long", day: "numeric" };
 
@@ -32,6 +35,14 @@ if (selectedTime.length > 0) {
 
 const handleRegularBooking = () => {
 	setRegularBooking(!regularBooking);
+};
+
+const handleRegularBookingLength = (value) => {
+	setRegularBookingLength(value);
+};
+
+const handleRegularBookingTimeformat = (timeformat) => {
+	setRegularBookingTimeformat(timeformat);
 };
 
   const createBooking = () => {
@@ -74,6 +85,7 @@ const handleRegularBooking = () => {
 		setTimeButtons(initTimes());
 		setSelectedTime([]);
 		setRegularBooking(false);
+		setRegularBookingTimeformat(null);
 		// fetchBookings();
 	}
 }, [bookings, selectedDate]);
