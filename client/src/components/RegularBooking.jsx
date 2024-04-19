@@ -136,6 +136,7 @@ const RegularBooking = ({ selectedDate, selectedTime, bookings, onRegularLengthC
 		<div className="regular-booking-container">
 			<form className="regular-booking-form">
 				<label htmlFor="">Pituus:</label>
+				<input type="number" id="regular-len" min="1" max={lenAvailable}
 				value={regularLength}
 
 				<input name='regular-time' type="radio" id='weekly' value='viikkoa'
