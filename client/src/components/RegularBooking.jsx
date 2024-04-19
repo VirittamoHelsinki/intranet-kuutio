@@ -132,12 +132,19 @@ const RegularBooking = ({ selectedDate, selectedTime, bookings, onRegularLengthC
 		onRegularLengthChange(1);
 	};
 
+	const handleBookingLength = (event) => {
+		const value = event.target.value;
+		onRegularLengthChange(value);
+		setRegularLength(value);
+	};
+
 	return (
 		<div className="regular-booking-container">
 			<form className="regular-booking-form">
 				<label htmlFor="">Pituus:</label>
 				<input type="number" id="regular-len" min="1" max={lenAvailable}
 				value={regularLength}
+				onChange={handleBookingLength}></input>
 
 				<input name='regular-time' type="radio" id='weekly' value='viikkoa'
 				onChange={() => (handleRadioButtons(0))}
