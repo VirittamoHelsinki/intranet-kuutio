@@ -6,6 +6,7 @@ const RegularBooking = ({ selectedDate, selectedTime, bookings, onRegularLengthC
 	const [lenAvailable, setLenAvailable] = useState(0);
 	const [timeFormat, setTimeFormat] = useState(null);
 	const [radioButtons, setRadioButtons] = useState([false, false]);
+	const [regularLength, setRegularLength] = useState(1);
 
 	useEffect(() => {
 		// console.log('useEffect');
@@ -15,6 +16,8 @@ const RegularBooking = ({ selectedDate, selectedTime, bookings, onRegularLengthC
 		// setRadioButtons[false, false];
 		// console.log('radioButtons', radioButtons);
 		checkRegularBookingAvailability(0);
+		setRegularLength(1);
+		onRegularLengthChange(1);
 	}, [selectedTime, radioButtons])
 
 	const isSameDate = (date1, date2) => {
@@ -125,13 +128,15 @@ const RegularBooking = ({ selectedDate, selectedTime, bookings, onRegularLengthC
 		updatedRadioButtons.fill(false);
 		updatedRadioButtons[index] = true;
 		setRadioButtons(updatedRadioButtons);
+		setRegularLength(1);
+		onRegularLengthChange(1);
 	};
 
 	return (
 		<div className="regular-booking-container">
 			<form className="regular-booking-form">
 				<label htmlFor="">Pituus:</label>
-				<input type="number" id="regular-len" min="2" max={lenAvailable} ></input>
+				value={regularLength}
 
 				<input name='regular-time' type="radio" id='weekly' value='viikkoa'
 				onChange={() => (handleRadioButtons(0))}
@@ -148,7 +153,7 @@ const RegularBooking = ({ selectedDate, selectedTime, bookings, onRegularLengthC
 			<div className='booking-collision-info'>
 				<div>
 					<label className='booking-length'>
-						Varattavissa: { lenAvailable } { timeFormat }
+						Varattavissa: { lenAvailable } { timeformat }
 					</label>
 				</div>
 				{ collision && (
