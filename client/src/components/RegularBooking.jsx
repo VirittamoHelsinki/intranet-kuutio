@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import "../styles/RegularBooking.scss"
 
-const RegularBooking = ({ selectedDate, selectedTime, bookings }) => {
+const RegularBooking = ({ selectedDate, selectedTime, bookings, onRegularLengthChange, timeformat, onTimeformatChange}) => {
 	const [collision, setCollision] = useState(null);
 	const [lenAvailable, setLenAvailable] = useState(0);
 	const [timeFormat, setTimeFormat] = useState(null);

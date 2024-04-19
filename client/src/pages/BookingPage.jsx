@@ -142,7 +142,10 @@ const handleRegularBookingTimeformat = (timeformat) => {
 					{ regularBooking && (
 						<RegularBooking selectedDate={selectedDate}
 										selectedTime={selectedTime}
-										bookings={bookings} />
+										bookings={bookings}
+										onRegularLengthChange={handleRegularBookingLength}
+										timeformat={regularBookingTimeformat}
+										onTimeformatChange={handleRegularBookingTimeformat}/>
 					) }
 
 				</div>
