@@ -207,6 +207,18 @@ const handleRegularBookingTimeformat = (timeformat) => {
 				</label>
 			  </div>
 			</div>
+			{ regularBooking && (
+				<div className='detail-row'>
+					<div className="detail-subject">
+						<label>Jatkuva:</label>
+					</div>
+					<div className="detail-value">
+						<label>
+							{regularBookingLength} {regularBookingTimeformat}
+						</label>
+					</div>
+				</div>
+			)}
 		  </div>
 		  <div className="modal-buttons">
 			<button
