@@ -9,6 +9,7 @@ import { bookingTopics } from "../features/arrays";
 import { getEndingTime } from "../components/TimeButtonFunctions";
 import TimeButton from "../components/TimeButton";
 import RegularBooking from "../components/RegularBooking";
+import "../styles/RegularBooking.scss"
 
 const BookingPage = () => {
   const [date, setDate] = useState(new Date());
