@@ -4,17 +4,10 @@ import "../styles/RegularBooking.scss"
 const RegularBooking = ({ selectedDate, selectedTime, bookings, onRegularLengthChange, timeformat, onTimeformatChange}) => {
 	const [collision, setCollision] = useState(null);
 	const [lenAvailable, setLenAvailable] = useState(0);
-	const [timeFormat, setTimeFormat] = useState(null);
 	const [radioButtons, setRadioButtons] = useState([false, false]);
 	const [regularLength, setRegularLength] = useState(1);
 
 	useEffect(() => {
-		// console.log('useEffect');
-		// setCollision(null);
-		// setTimeFormat(null);
-		// setLenAvailable(0);
-		// setRadioButtons[false, false];
-		// console.log('radioButtons', radioButtons);
 		checkRegularBookingAvailability(0);
 		setRegularLength(1);
 		onRegularLengthChange(1);
@@ -123,7 +116,6 @@ const RegularBooking = ({ selectedDate, selectedTime, bookings, onRegularLengthC
 	};
 
 	const handleRadioButtons = (index) => {
-		console.log('handleRadioButtons');
 		const updatedRadioButtons = [...radioButtons];
 		updatedRadioButtons.fill(false);
 		updatedRadioButtons[index] = true;
