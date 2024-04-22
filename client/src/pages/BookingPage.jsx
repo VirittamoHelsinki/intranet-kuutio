@@ -70,6 +70,36 @@ const handleRegularBookingTimeformat = (timeformat) => {
 	// Create booking logic (removed for simplicity)
   };
 
+  const newBookingLoop = () => {
+	let bookingDate = new Date(selectedDate);
+
+	for (let i = 0; i < regularBookingLength; i++) {
+		const data = {
+			topic,
+			name,
+			selectedDate: bookingDate,
+			selectedTime,
+			endingTime,
+		};
+
+	  bookingApi
+		.create(data)
+		.then(() => {
+			setLoading(false);
+			enqueueSnackbar('Booking Created successfully', { variant: 'success' });
+			// navigate('/');
+		})
+		.catch((error) => {
+			setLoading(false);
+			// alert('An error happened. Please Chack console');
+			enqueueSnackbar('Error', { variant: 'error' });
+			console.log(error);
+		});
+
+		bookingDate = getNextValidDay(bookingDate);
+  };
+};
+
   const newBookingHandler = () => {
 	let bookingDate = new Date(selectedDate);
 	const bookingPromises = [];
@@ -291,6 +321,7 @@ const handleRegularBookingTimeformat = (timeformat) => {
 			  onClick={() => {
 				// createBooking();
 				newBookingHandler();
+				// newBookingLoop();
 				setShowConfirmWindow(false);
 				setShowThanksWindow(true);
 			  }}
