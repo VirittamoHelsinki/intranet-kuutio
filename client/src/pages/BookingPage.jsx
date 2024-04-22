@@ -70,6 +70,66 @@ const handleRegularBookingTimeformat = (timeformat) => {
 	// Create booking logic (removed for simplicity)
   };
 
+  const newBookingHandler = () => {
+	let bookingDate = new Date(selectedDate);
+	const bookingPromises = [];
+
+	for (let i = 0; i < regularBookingLength; i++) {
+		const data = {
+			topic,
+			name,
+			selectedDate: bookingDate,
+			selectedTime,
+			endingTime,
+		};
+
+		const bookingPromise = bookingApi.create(data)
+		.catch((error) => {
+			console.error('Error creating booking:', error);
+			throw error;
+		});
+
+		bookingPromises.push(bookingPromise);
+		bookingDate = getNextValidDay(bookingDate);
+	}
+
+	Promise.all(bookingPromises)
+		.then(() => {
+			setLoading(false);
+			enqueueSnackbar('Booking created successfully', { variant: 'success' });
+			navigate('/');
+		})
+		.catch ((error) => {
+			setLoading(false);
+			enqueueSnackbar('Error creating bookings', { variant: 'error' });
+			console.error('Error creating bookings:', error);
+		});
+  };
+
+  const getNextValidDay = (oldDate) => {
+	let newDate = new Date(oldDate);
+	const format = regularBookingTimeformat;
+
+	if (format == 'arkipäivää' || format == 'arkipäivä') {
+		newDate.setDate(newDate.getDate() + 1);
+
+		// [sat, sun, mon, tue, wed, thu, fri]
+		const weekday = newDate.getDay();
+		const skipWeekend = (weekday === 0 || weekday === 1)
+			? 2 - weekday
+			: 0
+
+		newDate.setDate(newDate.getDate() + skipWeekend);
+	}
+	else if (format == 'viikkoa' || format == 'viikko') {
+		newDate.setDate(oldDate.getDate() + 7);
+		console.log('viikkoa');
+	}
+	return newDate;
+  };
+
+
+
   const fetchBookings = () => {
 	// Fetch bookings logic (removed for simplicity)
   };
@@ -87,6 +147,7 @@ const handleRegularBookingTimeformat = (timeformat) => {
 		setSelectedTime([]);
 		setRegularBooking(false);
 		setRegularBookingTimeformat(null);
+		setRegularBookingLength(1);
 		// fetchBookings();
 	}
 }, [bookings, selectedDate]);
@@ -228,7 +289,8 @@ const handleRegularBookingTimeformat = (timeformat) => {
 			<button
 			  className="black-button"
 			  onClick={() => {
-				createBooking();
+				// createBooking();
+				newBookingHandler();
 				setShowConfirmWindow(false);
 				setShowThanksWindow(true);
 			  }}
