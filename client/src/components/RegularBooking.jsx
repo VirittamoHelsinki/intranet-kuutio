@@ -37,13 +37,13 @@ const RegularBooking = ({ selectedDate, selectedTime, bookings, onRegularLengthC
 				continue;
 			}
 
-			if (checkCollision(bookings, dateToCheck)) {
+			if (isCollision(bookings, dateToCheck)) {
 				setLenAvailable(daysAvailable);
 				onTimeformatChange(daysAvailable == 1 ? 'arkipäivä' : 'arkipäivää');
 				collisionFound = true;
 				return ;
 			}
-			// check last booking to prevent extra checkCollision()
+			// check last booking to prevent extra isCollision()
 			// if bookings[-1] < dateToCheck ? daysAvailable = upperLimit
 
 			daysAvailable++;
@@ -55,7 +55,7 @@ const RegularBooking = ({ selectedDate, selectedTime, bookings, onRegularLengthC
 		}
 	};
 
-	const checkCollision = (bookings, dateToCheck) => {
+	const isCollision = (bookings, dateToCheck) => {
 		return bookings.some((booking) => {
 			const bookingDate = new Date(booking.selectedDate);
 
@@ -82,13 +82,13 @@ const RegularBooking = ({ selectedDate, selectedTime, bookings, onRegularLengthC
 		for (let i = 0; i < upperLimit; i++) {
 			dateToCheck.setDate(dateToCheck.getDate() + 7);
 
-			if (checkCollision(bookings, dateToCheck)) {
+			if (isCollision(bookings, dateToCheck)) {
 				setLenAvailable(weeksAvailable);
 				onTimeformatChange(weeksAvailable == 1 ? 'viikko' : 'viikkoa');
 				collisionFound = true;
 				return ;
 			}
-			// check last booking to prevent extra checkCollision()
+			// check last booking to prevent extra isCollision()
 			// if bookings[-1] < dateToCheck ? weeksAvailable = upperLimit
 
 			weeksAvailable++;
