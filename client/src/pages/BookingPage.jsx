@@ -46,6 +46,27 @@ const handleRegularBookingTimeformat = (timeformat) => {
 	setRegularBookingTimeformat(timeformat);
 };
 
+const getNextValidDay = (oldDate) => {
+	let newDate = new Date(oldDate);
+	const format = regularBookingTimeformat;
+
+	if (format == 'arkipäivää' || format == 'arkipäivä') {
+		newDate.setDate(newDate.getDate() + 1);
+
+		// [sun, mon, tue, wed, thu, fri, sat]
+		const weekday = newDate.getDay();
+		const skipWeekend = (weekday === 0 || weekday === 6)
+			? (weekday === 6 ? 2 : 1)
+			: 0
+
+		newDate.setDate(newDate.getDate() + skipWeekend);
+	}
+	else if (format == 'viikkoa' || format == 'viikko') {
+		newDate.setDate(oldDate.getDate() + 7);
+	}
+	return newDate;
+};
+
 const newBookingHandler = () => {
 	let bookingDate = new Date(selectedDate);
 	const bookingPromises = [];
@@ -81,29 +102,6 @@ const newBookingHandler = () => {
 			console.error('Error creating bookings:', error);
 		});
 };
-
-const getNextValidDay = (oldDate) => {
-	let newDate = new Date(oldDate);
-	const format = regularBookingTimeformat;
-
-	if (format == 'arkipäivää' || format == 'arkipäivä') {
-		newDate.setDate(newDate.getDate() + 1);
-
-		// [sat, sun, mon, tue, wed, thu, fri]
-		const weekday = newDate.getDay();
-		const skipWeekend = (weekday === 0 || weekday === 1)
-			? 2 - weekday
-			: 0
-
-		newDate.setDate(newDate.getDate() + skipWeekend);
-	}
-	else if (format == 'viikkoa' || format == 'viikko') {
-		newDate.setDate(oldDate.getDate() + 7);
-		console.log('viikkoa');
-	}
-	return newDate;
-};
-
 
   const fetchBookings = () => {
 	// Fetch bookings logic (removed for simplicity)
