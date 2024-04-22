@@ -26,15 +26,14 @@ const RegularBooking = ({ selectedDate, selectedTime, bookings, onRegularLengthC
 		const upperLimit = 363;
 		let daysAvailable = 1;
 		let collisionFound = false;
-		let dateToCheck = new Date();
-		dateToCheck.setDate(selectedDate.getDate());
+		let dateToCheck = new Date(selectedDate);
 
 		for (let i = 0; i < upperLimit; i++) {
 			dateToCheck.setDate(dateToCheck.getDate() + 1);
 
 			// skip weekends
 			const weekday = dateToCheck.getDay();
-			if (weekday == 0 || weekday == 6) {
+			if (weekday == 0 || weekday == 1) {
 				continue;
 			}
 
@@ -78,8 +77,7 @@ const RegularBooking = ({ selectedDate, selectedTime, bookings, onRegularLengthC
 		const upperLimit = 51;
 		let weeksAvailable = 1;
 		let collisionFound = false;
-		let dateToCheck = new Date();
-		dateToCheck.setDate(selectedDate.getDate());
+		let dateToCheck = new Date(selectedDate);
 
 		for (let i = 0; i < upperLimit; i++) {
 			dateToCheck.setDate(dateToCheck.getDate() + 7);
