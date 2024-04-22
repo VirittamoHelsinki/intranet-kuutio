@@ -4,6 +4,21 @@ import "../styles/BookingPage.scss";
 
 const BookingListPage = ({ bookings, onBookingsUpdate }) => {
 
+	const sortBookings = (filteredBookings) => {
+		const sortedBookings = filteredBookings.sort((a, b) => {
+			const dateComparison = new Date(a.selectedDate).getTime() - new Date(b.selectedDate).getTime();
+			if (dateComparison !== 0) {
+				return dateComparison;
+			}
+			else {
+				const timeA = a.selectedTime[0];
+				const timeB = b.selectedTime[0];
+				return timeA.localeCompare(timeB);
+			}
+		});
+		return sortedBookings;
+	};
+
   useEffect(() => {
     // Fetch bookings from the backend when the component mounts
     bookingApi
@@ -17,19 +32,7 @@ const BookingListPage = ({ bookings, onBookingsUpdate }) => {
           return bookingDate >= currentDate;
         });
 
-		const sortedBookings = filteredBookings.sort((a, b) => {
-			const dateComparison = new Date(a.selectedDate).getTime() - new Date(b.selectedDate).getTime();
-			if (dateComparison !== 0) {
-				return dateComparison;
-			}
-			else {
-				const timeA = a.selectedTime[0];
-				const timeB = b.selectedTime[0];
-				return timeA.localeCompare(timeB);
-			}
-		});
-
-        onBookingsUpdate(sortedBookings);
+        onBookingsUpdate(sortBookings(filteredBookings));
       })
       .catch((error) => {
         console.error("Error fetching bookings:", error);
