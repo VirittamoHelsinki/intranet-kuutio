@@ -46,61 +46,7 @@ const handleRegularBookingTimeformat = (timeformat) => {
 	setRegularBookingTimeformat(timeformat);
 };
 
-  const createBooking = () => {
-	const data = {
-	  topic,
-	  name,
-	  selectedDate,
-	  selectedTime,
-	  endingTime,
-	};
-	bookingApi
-	  .create(data)
-	  .then(() => {
-		setLoading(false);
-		enqueueSnackbar('Booking Created successfully', { variant: 'success' });
-		navigate('/');
-	  })
-	  .catch((error) => {
-		setLoading(false);
-		// alert('An error happened. Please Chack console');
-		enqueueSnackbar('Error', { variant: 'error' });
-		console.log(error);
-	  });
-	// Create booking logic (removed for simplicity)
-  };
-
-  const newBookingLoop = () => {
-	let bookingDate = new Date(selectedDate);
-
-	for (let i = 0; i < regularBookingLength; i++) {
-		const data = {
-			topic,
-			name,
-			selectedDate: bookingDate,
-			selectedTime,
-			endingTime,
-		};
-
-	  bookingApi
-		.create(data)
-		.then(() => {
-			setLoading(false);
-			enqueueSnackbar('Booking Created successfully', { variant: 'success' });
-			// navigate('/');
-		})
-		.catch((error) => {
-			setLoading(false);
-			// alert('An error happened. Please Chack console');
-			enqueueSnackbar('Error', { variant: 'error' });
-			console.log(error);
-		});
-
-		bookingDate = getNextValidDay(bookingDate);
-  };
-};
-
-  const newBookingHandler = () => {
+const newBookingHandler = () => {
 	let bookingDate = new Date(selectedDate);
 	const bookingPromises = [];
 
@@ -134,9 +80,9 @@ const handleRegularBookingTimeformat = (timeformat) => {
 			enqueueSnackbar('Error creating bookings', { variant: 'error' });
 			console.error('Error creating bookings:', error);
 		});
-  };
+};
 
-  const getNextValidDay = (oldDate) => {
+const getNextValidDay = (oldDate) => {
 	let newDate = new Date(oldDate);
 	const format = regularBookingTimeformat;
 
@@ -156,8 +102,7 @@ const handleRegularBookingTimeformat = (timeformat) => {
 		console.log('viikkoa');
 	}
 	return newDate;
-  };
-
+};
 
 
   const fetchBookings = () => {
@@ -319,9 +264,7 @@ const handleRegularBookingTimeformat = (timeformat) => {
 			<button
 			  className="black-button"
 			  onClick={() => {
-				// createBooking();
 				newBookingHandler();
-				// newBookingLoop();
 				setShowConfirmWindow(false);
 				setShowThanksWindow(true);
 			  }}
