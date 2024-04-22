@@ -63,7 +63,7 @@ const RegularBooking = ({ selectedDate, selectedTime, bookings, onRegularLengthC
 			if (isSameDate(bookingDate, dateToCheck)) {
 				for (let i = 0; i < booking.selectedTime.length; i++) {
 					if (selectedTime.includes(booking.selectedTime[i])) {
-						const collision = `${bookingDate.getDate()}.${bookingDate.getMonth()}.${bookingDate.getFullYear()} klo ${booking.selectedTime[i]}`
+						const collision = `${bookingDate.getDate()}.${bookingDate.getMonth() + 1}.${bookingDate.getFullYear()} klo ${booking.selectedTime[i]}`
 
 						setCollision(collision);
 						return true;
