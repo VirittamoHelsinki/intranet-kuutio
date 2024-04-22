@@ -103,8 +103,6 @@ const RegularBooking = ({ selectedDate, selectedTime, bookings, onRegularLengthC
 	};
 
 	const checkRegularBookingAvailability = (days) => {
-		console.log('checkRegularBookingAvailability');
-
 		if (days == 1 || radioButtons[0]) {
 			setRadioButtons[true, false];
 			return checkWeeksAvailable();
@@ -125,7 +123,7 @@ const RegularBooking = ({ selectedDate, selectedTime, bookings, onRegularLengthC
 	};
 
 	const handleBookingLength = (event) => {
-		const value = event.target.value;
+		const value = parseInt(event.target.value);
 		onRegularLengthChange(value);
 		setRegularLength(value);
 	};
