@@ -167,8 +167,9 @@ const newBookingHandler = () => {
 					<div className='regular-booking'>
 						<input type="checkbox"
 						onClick={() => handleRegularBooking()}
+						className='regular-booking-checkbox'
 						id='regular-booking-checkbox'/>
-						<label
+						<label className="regular-booking-checkbox"
 						htmlFor='regular-booking-checkbox'>
 							Jatkuva varaus
 						</label>
