@@ -29,6 +29,10 @@ const BookingListPage = ({ bookings, onBookingsUpdate }) => {
 
         const filteredBookings = response.data.data.filter((booking) => {
           const bookingDate = new Date(booking.selectedDate);
+
+		  // +1 error somewhere in dates, didnt show currentday bookings without this
+		  bookingDate.setDate(bookingDate.getDate() + 1);
+
           return bookingDate >= currentDate;
         });
 
