@@ -129,7 +129,7 @@ const RegularBooking = ({ selectedDate, selectedTime, bookings, onRegularLengthC
 	return (
 		<div className="regular-booking-container">
 			<form className="regular-booking-form">
-				<label htmlFor="">Pituus:</label>
+				<label htmlFor="">Toista:</label>
 				<input type="number" id="regular-len" min="1" max={lenAvailable}
 				value={regularLength}
 				onChange={handleBookingLength}></input>
@@ -138,7 +138,7 @@ const RegularBooking = ({ selectedDate, selectedTime, bookings, onRegularLengthC
 				onChange={() => (handleRadioButtons(0))}
 				onClick={() => checkRegularBookingAvailability(1)}
 				checked={radioButtons[0]} />
-				<label htmlFor="weekly">viikkoa</label>
+				<label htmlFor="weekly">viikon välein</label>
 
 				<input name='regular-time' type="radio" id='daily' value='arkipäivää'
 				onChange={() => (handleRadioButtons(1))}
