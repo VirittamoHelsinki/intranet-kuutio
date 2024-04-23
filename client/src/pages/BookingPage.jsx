@@ -12,8 +12,7 @@ import RegularBooking from "../components/RegularBooking";
 import "../styles/RegularBooking.scss"
 
 const BookingPage = () => {
-  const [date, setDate] = useState(new Date());
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const [newBooking, setNewBooking] = useState(false);
   const [topic, setTopic] = useState("");
   const [name, setName] = useState("");
@@ -129,7 +128,7 @@ const newBookingHandler = () => {
 	<div className="bookingpage-main">
 	  <div className="bookingpage-content">
 		<div className="calendar-times-content">
-		  <Calendar date={date} setDate={setDate} setSelectedDate={setSelectedDate} />
+		  <Calendar date={selectedDate} setSelectedDate={setSelectedDate} />
 		  {selectedDate &&
 			<TimeButton bookings={bookings} selectedDate={selectedDate}
 		  			timeButtons={timeButtons} selectedTime={selectedTime}
@@ -140,7 +139,7 @@ const newBookingHandler = () => {
 			{selectedDate && (
 				<div className="booking-data">
 					<div className="booking-headline">
-					<label>{date.toLocaleDateString("fi-FI", options)}</label>
+					<label>{selectedDate.toLocaleDateString("fi-FI", options)}</label>
 					</div>
 					{newBooking ? (
 					<div className="new-booking-content">

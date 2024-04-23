@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { months, weekDays } from "../features/arrays";
 import "../styles/Calendar.scss";
 
-const Calendar = ({ date, setDate, setSelectedDate, highlightDays = [] }) => {
+const Calendar = ({ date, setSelectedDate, highlightDays = [] }) => {
   const [days, setDays] = useState([]);
   const [selectedDay, setSelectedDay] = useState(null);
   const [selectedMonth, setSelectedMonth] = useState(date.getMonth());
@@ -37,17 +37,16 @@ const Calendar = ({ date, setDate, setSelectedDate, highlightDays = [] }) => {
 
   const gotoPreviousMonth = () => {
     const newDate = new Date(selectedYear, selectedMonth - 1, 1);
-    setDate(newDate);
+    setSelectedDate(newDate);
   };
 
   const gotoNextMonth = () => {
     const newDate = new Date(selectedYear, selectedMonth + 1, 1);
-    setDate(newDate);
+    setSelectedDate(newDate);
   };
 
   const gotoToday = () => {
 	const today = new Date(currentYear, currentMonth, currentDay);
-	setDate(today);
 	setSelectedDate(today);
   };
 
@@ -136,7 +135,6 @@ const Calendar = ({ date, setDate, setSelectedDate, highlightDays = [] }) => {
 			onClick={() => {
 				if (isCurrentMonth && isSelectable) {
 					setSelectedDay(day.getDate());
-                    setDate(new Date(selectedYear, selectedMonth, day.getDate()));
                     setSelectedDate(new Date(selectedYear, selectedMonth, day.getDate()));
                   } else {
                     window.alert("Valitse nykyinen tai tuleva varauksen päivämäärä.");
