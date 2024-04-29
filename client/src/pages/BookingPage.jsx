@@ -10,7 +10,6 @@ import { getEndingTime } from "../components/TimeButtonFunctions";
 import TimeButton from "../components/TimeButton";
 import RegularBooking from "../components/RegularBooking";
 import "../styles/RegularBooking.scss"
-
 const BookingPage = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [newBooking, setNewBooking] = useState(false);
@@ -24,7 +23,6 @@ const BookingPage = () => {
   const [regularBooking, setRegularBooking] = useState(false);
   const [regularBookingLength, setRegularBookingLength] = useState(1);
   const [regularBookingTimeformat, setRegularBookingTimeformat] = useState(null);
-
 
   const options = { weekday: "long", year: "numeric", month: "long", day: "numeric" };
 
@@ -129,10 +127,11 @@ const newBookingHandler = () => {
 	  <div className="bookingpage-content">
 		<div className="calendar-times-content">
 		  <Calendar date={selectedDate} setSelectedDate={setSelectedDate} />
-		  {selectedDate &&
-			<TimeButton bookings={bookings} selectedDate={selectedDate}
-		  			timeButtons={timeButtons} selectedTime={selectedTime}
-					setSelectedTime={setSelectedTime} setNewBooking={setNewBooking} />}
+		  { selectedDate && (
+			  <TimeButton bookings={bookings} selectedDate={selectedDate}
+						timeButtons={timeButtons} selectedTime={selectedTime}
+					  setSelectedTime={setSelectedTime} setNewBooking={setNewBooking} />
+		  )}
 		</div>
 		<div className="booking-content">
 		  <div className="booking-data-content">
@@ -176,11 +175,11 @@ const newBookingHandler = () => {
 
 					{ regularBooking && (
 						<RegularBooking selectedDate={selectedDate}
-										selectedTime={selectedTime}
-										bookings={bookings}
-										onRegularLengthChange={handleRegularBookingLength}
-										timeformat={regularBookingTimeformat}
-										onTimeformatChange={handleRegularBookingTimeformat}/>
+							selectedTime={selectedTime}
+							bookings={bookings}
+							onRegularLengthChange={handleRegularBookingLength}
+							timeformat={regularBookingTimeformat}
+							onTimeformatChange={handleRegularBookingTimeformat}/>
 					) }
 
 				</div>
