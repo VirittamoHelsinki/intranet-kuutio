@@ -47,7 +47,6 @@ mongoose
     console.log('Kuutio app connected to database');
     app.listen(PORT, () => {
       logger.info(`Kuutio app is listening to port: ${PORT}`);
-      console.log(mongoUri)
     });
   })
   .catch((error) => {
