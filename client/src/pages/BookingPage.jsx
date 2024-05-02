@@ -6,12 +6,17 @@ import "../styles/BookingPage.scss";
 import bookingApi from "../api/booking";
 import BookingListPage from "../components/BookingListPage";
 import { bookingTopics } from "../features/arrays";
-import { getEndingTime } from "../components/TimeButtonFunctions";
+import { getEndingTime, disableBookedTimes } from "../components/TimeButtonFunctions";
 import TimeButton from "../components/TimeButton";
 import RegularBooking from "../components/RegularBooking";
 import "../styles/RegularBooking.scss"
+
 const BookingPage = () => {
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date(
+	new Date().getFullYear(),
+	new Date().getMonth(),
+	new Date().getDate(),
+  ));
   const [newBooking, setNewBooking] = useState(false);
   const [topic, setTopic] = useState("");
   const [name, setName] = useState("");
@@ -112,6 +117,7 @@ const newBookingHandler = () => {
 	setNewBooking(false);
 	setTopic("");
 	setName("");
+	disableBookedTimes(bookings, selectedDate, timeButtons);
 	if (selectedDate) {
 		setTimeButtons(initTimes());
 		setSelectedTime([]);
