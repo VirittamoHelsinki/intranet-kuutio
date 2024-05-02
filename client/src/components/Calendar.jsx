@@ -36,7 +36,22 @@ const Calendar = ({ date, setSelectedDate, highlightDays = [] }) => {
   }, [date]);
 
   const gotoPreviousMonth = () => {
-    const newDate = new Date(selectedYear, selectedMonth - 1, 1);
+	let newDate;
+
+	// currentmonth, set to today
+	if (selectedMonth == currentMonth + 1 &&
+		selectedYear == currentYear) {
+		newDate = new Date(currentYear, currentMonth, currentDay);
+	}
+	// future
+	else if ( (selectedMonth > currentMonth + 1 && selectedYear >= currentYear)
+			|| (selectedYear > currentYear) ) {
+		newDate = new Date(selectedYear, selectedMonth - 1, 1);
+	}
+	// history, unselectable
+	else {
+		newDate = new Date(currentYear, currentMonth, currentDay);
+	}
     setSelectedDate(newDate);
   };
 
