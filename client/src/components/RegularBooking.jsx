@@ -33,7 +33,7 @@ const RegularBooking = ({ selectedDate, selectedTime, bookings, onRegularLengthC
 
 			// skip weekends
 			const weekday = dateToCheck.getDay();
-			if (weekday == 0 || weekday == 1) {
+			if (weekday == 0 || weekday == 6) {
 				continue;
 			}
 
