@@ -55,9 +55,9 @@ const Calendar = ({ date, setSelectedDate, highlightDays = [] }) => {
     setSelectedDate(newDate);
   };
 
-  const gotoNextMonth = () => {
-    const newDate = new Date(selectedYear, selectedMonth + 1, 1);
-    setSelectedDate(newDate);
+  const gotoNextMonth = (day) => {
+	  const newDate = new Date(selectedYear, selectedMonth + 1, day);
+	  setSelectedDate(newDate);
   };
 
   const gotoToday = () => {
@@ -117,7 +117,7 @@ const Calendar = ({ date, setSelectedDate, highlightDays = [] }) => {
           <label className="month-label">
             {months[selectedMonth]} {selectedYear}
           </label>
-          <label className="month-button" onClick={gotoNextMonth}>
+          <label className="month-button" onClick={() => gotoNextMonth(1)}>
             {months[selectedMonth + 1 > 11 ? 0 : selectedMonth + 1]}
           </label>
         </div>
@@ -136,6 +136,7 @@ const Calendar = ({ date, setSelectedDate, highlightDays = [] }) => {
             const isSelectable = isDateSelectable(day);
 			const isToday = isDateToday(day);
 			const isSelected = isDateSelected(day);
+			const isNextMonth = day.getMonth() === selectedMonth + 1;
 
             return (
 				<div
@@ -151,7 +152,11 @@ const Calendar = ({ date, setSelectedDate, highlightDays = [] }) => {
 				if (isCurrentMonth && isSelectable) {
 					setSelectedDay(day.getDate());
                     setSelectedDate(new Date(selectedYear, selectedMonth, day.getDate()));
-                  } else {
+                  }
+				else if (isSelectable && isNextMonth) {
+					gotoNextMonth(day.getDate());
+				}
+				else {
                     window.alert("Valitse nykyinen tai tuleva varauksen päivämäärä.");
                   }
                 }}
