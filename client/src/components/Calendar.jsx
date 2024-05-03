@@ -106,6 +106,17 @@ const Calendar = ({ date, setSelectedDate, highlightDays = [] }) => {
     return day >= today;
   };
 
+  const isSelectablePreviousMonth = (day) => {
+	const year = day.getFullYear();
+	const month = day.getMonth();
+
+	if (year > currentYear ||
+		year == currentYear && month >= currentMonth) {
+		return true;
+	}
+	return false;
+  }
+
   return (
     <div className="minified-calendar">
       <div className="calendar-header">
@@ -137,6 +148,7 @@ const Calendar = ({ date, setSelectedDate, highlightDays = [] }) => {
 			const isToday = isDateToday(day);
 			const isSelected = isDateSelected(day);
 			const isNextMonth = day.getMonth() === selectedMonth + 1;
+			const isSelectablePrevMonth = isSelectablePreviousMonth(day);
 
             return (
 				<div
@@ -155,6 +167,9 @@ const Calendar = ({ date, setSelectedDate, highlightDays = [] }) => {
                   }
 				else if (isSelectable && isNextMonth) {
 					gotoNextMonth(day.getDate());
+				}
+				else if (isSelectablePrevMonth) {
+					gotoPreviousMonth();
 				}
 				else {
                     window.alert("Valitse nykyinen tai tuleva varauksen päivämäärä.");
