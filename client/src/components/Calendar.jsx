@@ -51,6 +51,7 @@ const Calendar = ({ date, setSelectedDate, highlightDays = [] }) => {
 	// history, unselectable
 	else {
 		newDate = new Date(currentYear, currentMonth, currentDay);
+		// add alert?
 	}
     setSelectedDate(newDate);
   };
@@ -115,7 +116,18 @@ const Calendar = ({ date, setSelectedDate, highlightDays = [] }) => {
 		return true;
 	}
 	return false;
-  }
+};
+
+const isSelectableNextMonth = (day) => {
+	const year = day.getFullYear();
+	const month = day.getMonth();
+
+	if (year > selectedYear ||
+		year == selectedYear && month > selectedMonth) {
+		return true;
+	}
+	return false;
+  };
 
   return (
     <div className="minified-calendar">
@@ -147,7 +159,7 @@ const Calendar = ({ date, setSelectedDate, highlightDays = [] }) => {
             const isSelectable = isDateSelectable(day);
 			const isToday = isDateToday(day);
 			const isSelected = isDateSelected(day);
-			const isNextMonth = day.getMonth() === selectedMonth + 1;
+			const isNextMonth = isSelectableNextMonth(day);
 			const isSelectablePrevMonth = isSelectablePreviousMonth(day);
 
             return (
