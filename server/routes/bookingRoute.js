@@ -53,6 +53,21 @@ router.get('/getbookings', async (request, response) => {
   }
 });
 
+router.get('/getbookings/:date', async (request, response) => {
+  try {
+	const date = request.params.date;
+    const bookings = await Booking.find({ selectedDate: request.params.date});
+
+    return response.status(200).json({
+      count: bookings.length,
+      data: bookings,
+    });
+  } catch (error) {
+    console.log(error.message);
+    response.status(500).send({ message: error.message });
+  }
+});
+
 router.delete('/:id', async (request, response) => {
   try {
     const booking = await Booking.findById(request.params.id);
