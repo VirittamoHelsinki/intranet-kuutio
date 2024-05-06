@@ -21,6 +21,14 @@ const getAll = async () => {
     return response
 }
 
+const getByDate= async date => {
+    const response = await axios.get(
+        `${url}/getbookings/${date}`, requestConfig()
+    )
+
+    return response
+}
+
 const remove = async id => {
     const response = await axios.delete(
         `${url}/${id}`, requestConfig()
@@ -29,4 +37,4 @@ const remove = async id => {
     return response
 }
 
-export default { create, getAll, remove }
+export default { create, getAll, remove, getByDate }
