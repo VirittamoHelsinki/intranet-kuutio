@@ -35,29 +35,35 @@ const Calendar = ({ date, setSelectedDate, highlightDays = [] }) => {
     setSelectedDay(date.getDate());
   }, [date]);
 
-  const gotoPreviousMonth = () => {
+  const gotoPreviousMonth = (day) => {
 	let newDate;
 
 	// currentmonth, set to today
 	if (selectedMonth == currentMonth + 1 &&
 		selectedYear == currentYear) {
-		newDate = new Date(currentYear, currentMonth, currentDay);
+			if (day > currentDay) {
+				newDate = new Date(currentYear, currentMonth, day);
+			}
+			else {
+				newDate = new Date(currentYear, currentMonth, currentDay);
+			}
 	}
 	// future
 	else if ( (selectedMonth > currentMonth + 1 && selectedYear >= currentYear)
 			|| (selectedYear > currentYear) ) {
-		newDate = new Date(selectedYear, selectedMonth - 1, 1);
+		newDate = new Date(selectedYear, selectedMonth - 1, day);
 	}
 	// history, unselectable
 	else {
 		newDate = new Date(currentYear, currentMonth, currentDay);
+		// add alert?
 	}
     setSelectedDate(newDate);
   };
 
-  const gotoNextMonth = () => {
-    const newDate = new Date(selectedYear, selectedMonth + 1, 1);
-    setSelectedDate(newDate);
+  const gotoNextMonth = (day) => {
+	  const newDate = new Date(selectedYear, selectedMonth + 1, day);
+	  setSelectedDate(newDate);
   };
 
   const gotoToday = () => {
@@ -106,18 +112,40 @@ const Calendar = ({ date, setSelectedDate, highlightDays = [] }) => {
     return day >= today;
   };
 
+  const isSelectablePreviousMonth = (day) => {
+	const year = day.getFullYear();
+	const month = day.getMonth();
+
+	if (year > currentYear ||
+		year == currentYear && month >= currentMonth && day.getDate() >= currentDay) {
+		return true;
+	}
+	return false;
+};
+
+const isSelectableNextMonth = (day) => {
+	const year = day.getFullYear();
+	const month = day.getMonth();
+
+	if (year > selectedYear ||
+		year == selectedYear && month > selectedMonth) {
+		return true;
+	}
+	return false;
+  };
+
   return (
     <div className="minified-calendar">
       <div className="calendar-header">
 		<button className="today-button" onClick={gotoToday}>Tänään</button>
         <div className="calendar-header-top">
-          <label className="month-button" onClick={gotoPreviousMonth}>
+          <label className="month-button" onClick={() => gotoPreviousMonth(1)}>
             {months[selectedMonth - 1 < 0 ? 11 : selectedMonth - 1]}
           </label>
           <label className="month-label">
             {months[selectedMonth]} {selectedYear}
           </label>
-          <label className="month-button" onClick={gotoNextMonth}>
+          <label className="month-button" onClick={() => gotoNextMonth(1)}>
             {months[selectedMonth + 1 > 11 ? 0 : selectedMonth + 1]}
           </label>
         </div>
@@ -136,6 +164,8 @@ const Calendar = ({ date, setSelectedDate, highlightDays = [] }) => {
             const isSelectable = isDateSelectable(day);
 			const isToday = isDateToday(day);
 			const isSelected = isDateSelected(day);
+			const isNextMonth = isSelectableNextMonth(day);
+			const isSelectablePrevMonth = isSelectablePreviousMonth(day);
 
             return (
 				<div
@@ -151,7 +181,14 @@ const Calendar = ({ date, setSelectedDate, highlightDays = [] }) => {
 				if (isCurrentMonth && isSelectable) {
 					setSelectedDay(day.getDate());
                     setSelectedDate(new Date(selectedYear, selectedMonth, day.getDate()));
-                  } else {
+                  }
+				else if (isSelectable && isNextMonth) {
+					gotoNextMonth(day.getDate());
+				}
+				else if (isSelectablePrevMonth) {
+					gotoPreviousMonth(day.getDate());
+				}
+				else {
                     window.alert("Valitse nykyinen tai tuleva varauksen päivämäärä.");
                   }
                 }}

@@ -1,6 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import "../styles/RegularBooking.scss"
 
+export const isSameDate = (date1, date2) => {
+	if (date1.getFullYear() == date2.getFullYear() &&
+		date1.getMonth() == date2.getMonth() &&
+		date1.getDate() == date2.getDate()) {
+			return true;
+		}
+	return false;
+}
+
 const RegularBooking = ({ selectedDate, selectedTime, bookings, onRegularLengthChange, timeformat, onTimeformatChange}) => {
 	const [collision, setCollision] = useState(null);
 	const [lenAvailable, setLenAvailable] = useState(0);
@@ -13,14 +22,6 @@ const RegularBooking = ({ selectedDate, selectedTime, bookings, onRegularLengthC
 		onRegularLengthChange(1);
 	}, [selectedTime, radioButtons])
 
-	const isSameDate = (date1, date2) => {
-		if (date1.getFullYear() == date2.getFullYear() &&
-			date1.getMonth() == date2.getMonth() &&
-			date1.getDate() == date2.getDate()) {
-				return true;
-			}
-		return false;
-	}
 
 	const checkDaysAvailable = () => {
 		const upperLimit = 363;
@@ -33,7 +34,7 @@ const RegularBooking = ({ selectedDate, selectedTime, bookings, onRegularLengthC
 
 			// skip weekends
 			const weekday = dateToCheck.getDay();
-			if (weekday == 0 || weekday == 1) {
+			if (weekday == 0 || weekday == 6) {
 				continue;
 			}
 

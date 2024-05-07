@@ -10,6 +10,8 @@ import { getEndingTime, disableBookedTimes } from "../components/TimeButtonFunct
 import TimeButton from "../components/TimeButton";
 import RegularBooking from "../components/RegularBooking";
 import "../styles/RegularBooking.scss"
+import { sortBookings } from "../components/BookingListPage";
+import { isSameDate } from "../components/RegularBooking";
 
 const BookingPage = () => {
   const [selectedDate, setSelectedDate] = useState(new Date(
@@ -28,6 +30,7 @@ const BookingPage = () => {
   const [regularBooking, setRegularBooking] = useState(false);
   const [regularBookingLength, setRegularBookingLength] = useState(1);
   const [regularBookingTimeformat, setRegularBookingTimeformat] = useState(null);
+  const [selectedBookings, setSelectedBookings] = useState([]);
 
   const options = { weekday: "long", year: "numeric", month: "long", day: "numeric" };
 
@@ -113,12 +116,20 @@ const newBookingHandler = () => {
 	setBookings(updatedBookings);
   };
 
+  const getBookingsByDate = () => {
+		return bookings.filter((booking) => {
+			const date = new Date(booking.selectedDate);
+			return isSameDate(date, selectedDate);
+		})
+	};
+
   useEffect(() => {
 	setNewBooking(false);
 	setTopic("");
 	setName("");
 	disableBookedTimes(bookings, selectedDate, timeButtons);
 	if (selectedDate) {
+		setSelectedBookings(sortBookings(getBookingsByDate()))
 		setTimeButtons(initTimes());
 		setSelectedTime([]);
 		setRegularBooking(false);
@@ -192,7 +203,9 @@ const newBookingHandler = () => {
 
 				) : (
 					<div className="booking-column">
-						<BookingListPage bookings={bookings} onBookingsUpdate={handleBookingsUpdate}/>
+						<BookingListPage onBookingsUpdate={handleBookingsUpdate}
+										selectedDate={selectedDate}
+										selectedBookings={selectedBookings}/>
 					</div>
 				)}
 			  </div>
