@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { months, weekDays } from "../features/arrays";
 import "../styles/Calendar.scss";
+import ToastAlert from "./ToastAlert";
 
 const Calendar = ({ date, setSelectedDate, highlightDays = [] }) => {
   const [days, setDays] = useState([]);
   const [selectedDay, setSelectedDay] = useState(null);
   const [selectedMonth, setSelectedMonth] = useState(date.getMonth());
   const [selectedYear, setSelectedYear] = useState(date.getFullYear());
+  const [showToast, setShowToast] = useState(false);
 
   const currentDay = new Date().getDate();
   const currentMonth = new Date().getMonth();
@@ -134,6 +136,16 @@ const isSelectableNextMonth = (day) => {
 	return false;
   };
 
+  useEffect(() => {
+    if (showToast) {
+      const timer = setTimeout(() => {
+        setShowToast(false);
+      }, 5000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [showToast]);
+
   return (
     <div className="minified-calendar">
       <div className="calendar-header">
@@ -189,7 +201,7 @@ const isSelectableNextMonth = (day) => {
 					gotoPreviousMonth(day.getDate());
 				}
 				else {
-                    window.alert("Valitse nykyinen tai tuleva varauksen päivämäärä.");
+          setShowToast(true);
                   }
                 }}
               >
@@ -199,6 +211,7 @@ const isSelectableNextMonth = (day) => {
           })}
         </div>
       </div>
+      {showToast && <ToastAlert />}
     </div>
   );
 };
