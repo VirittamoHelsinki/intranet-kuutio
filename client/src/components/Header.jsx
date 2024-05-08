@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 //import { fullName } from "../features/functions";
-
 import useStore from "../store";
 import Authorize from "./Authorize";
 import "../styles/Header.scss";
@@ -36,7 +35,6 @@ const Header = () => {
       <label className="header-label">
         {user ? fullName(user.email) : null}
       </label>
-
       <Authorize />
     </div>
   );
