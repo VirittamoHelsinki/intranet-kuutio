@@ -24,12 +24,11 @@ const validateBooking = async (newBooking) => {
 		!newBooking.selectedDate ||
 		!newBooking.selectedTime ||
 		!newBooking.endingTime) {
-			throw new Error('Send all required fields: topic, name, date, time, endingtime');
+			throw { statuscode: 404, message: 'Send all required fields: topic, name, date, time, endingtime'}
 		}
-
 	const alreadyBooked = await isBooked(newBooking.selectedDate, newBooking.selectedTime);
 	if (alreadyBooked) {
-		throw new Error('Error! Selected time has been booked.');
+		throw { statuscode: 409, message: 'Error, selected time already booked!'};
 	}
 };
 
@@ -45,12 +44,11 @@ router.post('/', async (request, response) => {
     };
 
 	await validateBooking(newBooking);
-	const booking = await Booking.create(newBooking);
 
+	const booking = await Booking.create(newBooking);
 	return response.status(201).send(booking);
   } catch (error) {
-	console.log(error.message);
-	response.status(error.statuscode).send({ message: error.message });
+	response.status(error.statuscode || 500).send({ message: error.message });
   }
 });
 
