@@ -7,10 +7,18 @@ const router = express.Router();
 // From here on, require authorization level 1 on all routes.
 //router.all('*', requireAuthorization(1))
 
-const isBooked = async (date, time) => {
+const isBooked = async (date, times) => {
 	try {
-		const bookings = await Booking.find({ selectedDate: date, selectedTime: time });
-		return bookings.length > 0;
+		const bookings = await Booking.find({ selectedDate: date});
+
+		for (const booking of bookings) {
+			for (const bookingTime of booking.selectedTime) {
+				if (times.includes(bookingTime)) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 	catch (error) {
 		console.log(error.message);
