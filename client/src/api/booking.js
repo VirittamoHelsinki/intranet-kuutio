@@ -6,11 +6,18 @@ import { requestConfig } from './authorize'
 const url = `${apiUrl}/booking`
 
 const create = async object => {
-    const response = await axios.post(
-        url, object, requestConfig()
-    )
-
-    return response
+	try {
+		const response = await axios.post(
+			url, object, requestConfig()
+		)
+		return response
+	}
+	catch (error) {
+		if (error.response) {
+			throw new Error('Error creating booking');
+		}
+		throw error;
+	}
 }
 
 const getAll = async () => {
@@ -21,7 +28,7 @@ const getAll = async () => {
     return response
 }
 
-const getByDate= async date => {
+const getByDate = async date => {
     const response = await axios.get(
         `${url}/getbookings/${date}`, requestConfig()
     )
