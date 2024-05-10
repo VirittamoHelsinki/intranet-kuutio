@@ -26,6 +26,7 @@ const BookingPage = () => {
   const [timeButtons, setTimeButtons] = useState(initTimes());
   const [showConfirmWindow, setShowConfirmWindow] = useState(false);
   const [showThanksWindow, setShowThanksWindow] = useState(false);
+  const [showErrorWindow, setShowErrorWindow] = useState(false);
   const [bookings, setBookings] = useState([]);
   const [regularBooking, setRegularBooking] = useState(false);
   const [regularBookingLength, setRegularBookingLength] = useState(1);
@@ -87,7 +88,7 @@ const newBookingHandler = () => {
 
 		const bookingPromise = bookingApi.create(data)
 		.catch((error) => {
-			console.error('Error creating booking:', error);
+			console.error('Error creating a booking:', error);
 			throw error;
 		});
 
@@ -97,14 +98,17 @@ const newBookingHandler = () => {
 
 	Promise.all(bookingPromises)
 		.then(() => {
-			setLoading(false);
-			enqueueSnackbar('Booking created successfully', { variant: 'success' });
-			navigate('/');
+			// setLoading(false);
+			// enqueueSnackbar('Booking created successfully', { variant: 'success' });
+			// navigate('/');
+			setShowConfirmWindow(false);
+			setShowThanksWindow(true);
 		})
 		.catch ((error) => {
-			setLoading(false);
-			enqueueSnackbar('Error creating bookings', { variant: 'error' });
-			console.error('Error creating bookings:', error);
+			// setLoading(false);
+			// enqueueSnackbar('Error creating bookings', { variant: 'error' });
+			console.error('Error creating a booking:', error);
+			setShowErrorWindow(true);
 		});
 };
 
@@ -281,8 +285,9 @@ const newBookingHandler = () => {
 			  className="black-button"
 			  onClick={() => {
 				newBookingHandler();
-				setShowConfirmWindow(false);
-				setShowThanksWindow(true);
+
+				// setShowConfirmWindow(false);
+				// setShowThanksWindow(true);
 			  }}
 			>
 			  Vahvista
@@ -322,6 +327,28 @@ const newBookingHandler = () => {
 		  </div>
 		</div>
 	  )}
+	  {showErrorWindow && (
+		<div className="fullscreen-modal">
+		  <div className="modal-thanks-content">
+			<div className="thanks-label">
+			  <label>Virhe!</label>
+			</div>
+			<div className="description-label">
+			  <label>Aika ehdittiin varata!</label>
+			</div>
+		  </div>
+		  <div className="modal-buttons">
+			<button className="black-button" onClick={() => {
+				setNewBooking(false);
+				setShowErrorWindow(false);
+				setShowThanksWindow(false);
+			}}>
+			  Tee uusi varaus
+			</button>
+		  </div>
+		</div>
+		)
+	  }
 	</div>
   );
 };

@@ -7,20 +7,42 @@ const router = express.Router();
 // From here on, require authorization level 1 on all routes.
 //router.all('*', requireAuthorization(1))
 
+const isBooked = async (date, times) => {
+	try {
+		const bookings = await Booking.find({ selectedDate: date});
+
+		for (const booking of bookings) {
+			for (const bookingTime of booking.selectedTime) {
+				if (times.includes(bookingTime)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	catch (error) {
+		console.log(error.message);
+		throw new Error('Error checking doublebookings');
+	}
+};
+
+const validateBooking = async (newBooking) => {
+	if (!newBooking.topic ||
+		!newBooking.name ||
+		!newBooking.selectedDate ||
+		!newBooking.selectedTime ||
+		!newBooking.endingTime) {
+			throw { statuscode: 404, message: 'Send all required fields: topic, name, date, time, endingtime'}
+		}
+	const alreadyBooked = await isBooked(newBooking.selectedDate, newBooking.selectedTime);
+	if (alreadyBooked) {
+		throw { statuscode: 409, message: 'Error, selected time already booked!'};
+	}
+};
+
 // Route for posting a new Booking
 router.post('/', async (request, response) => {
   try {
-    if (
-      !request.body.topic ||
-      !request.body.name ||
-      !request.body.selectedDate ||
-      !request.body.selectedTime ||
-	  !request.body.endingTime
-    ) {
-      return response.status(400).send({
-        message: 'Send all required fields: topic, name, date, time, endingtime',
-      });
-    }
     const newBooking = {
       topic: request.body.topic,
       name: request.body.name,
@@ -29,12 +51,12 @@ router.post('/', async (request, response) => {
 	  endingTime: request.body.endingTime,
     };
 
-    const booking = await Booking.create(newBooking);
+	await validateBooking(newBooking);
 
-    return response.status(201).send(booking);
+	const booking = await Booking.create(newBooking);
+	return response.status(201).send(booking);
   } catch (error) {
-    console.log(error.message);
-    response.status(500).send({ message: error.message });
+	response.status(error.statuscode || 500).send({ message: error.message });
   }
 });
 
