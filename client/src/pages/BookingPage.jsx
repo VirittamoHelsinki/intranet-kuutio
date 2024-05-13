@@ -12,6 +12,7 @@ import RegularBooking from "../components/RegularBooking";
 import "../styles/RegularBooking.scss"
 import { sortBookings } from "../components/BookingListPage";
 import { isSameDate } from "../components/RegularBooking";
+import ErrorWindow from "../components/ErrorWindow";
 
 const BookingPage = () => {
   const [selectedDate, setSelectedDate] = useState(new Date(
@@ -107,7 +108,7 @@ const newBookingHandler = () => {
 		.catch ((error) => {
 			// setLoading(false);
 			// enqueueSnackbar('Error creating bookings', { variant: 'error' });
-			console.error('Error creating a booking:', error);
+			console.error('One or more bookings failed:', error);
 			setShowErrorWindow(true);
 		});
 };
@@ -281,16 +282,9 @@ const newBookingHandler = () => {
 			)}
 		  </div>
 		  <div className="modal-buttons">
-			<button
-			  className="black-button"
-			  onClick={() => {
-				newBookingHandler();
-
-				// setShowConfirmWindow(false);
-				// setShowThanksWindow(true);
-			  }}
-			>
-			  Vahvista
+			<button className="black-button"
+				onClick={() => { newBookingHandler() }} >
+				Vahvista
 			</button>
 			<button className="nocolor-button" onClick={() => setShowConfirmWindow(false)}>
 			  Peruuta
@@ -328,27 +322,10 @@ const newBookingHandler = () => {
 		</div>
 	  )}
 	  {showErrorWindow && (
-		<div className="fullscreen-modal">
-		  <div className="modal-thanks-content">
-			<div className="thanks-label">
-			  <label>Virhe!</label>
-			</div>
-			<div className="description-label">
-			  <label>Varaus epäonnistunut!</label>
-			</div>
-		  </div>
-		  <div className="modal-buttons">
-			<button className="black-button" onClick={() => {
-				setNewBooking(false);
-				setShowErrorWindow(false);
-				setShowThanksWindow(false);
-			}}>
-			  Tee uusi varaus
-			</button>
-		  </div>
-		</div>
-		)
-	  }
+		<ErrorWindow setNewBooking={setNewBooking}
+					setShowErrorWindow={setShowErrorWindow}
+					setShowConfirmWindow={setShowConfirmWindow}/>
+		)}
 	</div>
   );
 };
