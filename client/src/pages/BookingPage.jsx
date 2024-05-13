@@ -334,7 +334,7 @@ const newBookingHandler = () => {
 			  <label>Virhe!</label>
 			</div>
 			<div className="description-label">
-			  <label>Aika ehdittiin varata!</label>
+			  <label>Varaus epäonnistunut!</label>
 			</div>
 		  </div>
 		  <div className="modal-buttons">
