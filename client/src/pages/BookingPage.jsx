@@ -13,6 +13,7 @@ import "../styles/RegularBooking.scss"
 import { sortBookings } from "../components/BookingListPage";
 import { isSameDate } from "../components/RegularBooking";
 import ErrorWindow from "../components/ErrorWindow";
+import ThanksWindow from "../components/ThanksWindow";
 
 const BookingPage = () => {
   const [selectedDate, setSelectedDate] = useState(new Date(
@@ -293,34 +294,10 @@ const newBookingHandler = () => {
 		</div>
 	  )}
 	  {showThanksWindow && (
-		<div className="fullscreen-modal">
-		  <div className="modal-thanks-content">
-			<div className="thanks-label">
-			  <label>Kiitos!</label>
-			</div>
-			<div className="description-label">
-			  <label>Huone on varattu sinulle!</label>
-			</div>
-		  </div>
-		  <div className="modal-buttons">
-			<button className="black-button" onClick={() => {
-				setNewBooking(false);
-				setShowThanksWindow(false);
-			}}>
-			  Tee uusi varaus
-			</button>
-			<Link to="/">
-			  <button className="nocolor-button" onClick={() => {
-				  setNewBooking(false);
-				  setShowThanksWindow(false);
-				}}>
-				Takaisin etusivulle
-			  </button>
-			</Link>
-
-		  </div>
-		</div>
+		<ThanksWindow setNewBooking={setNewBooking}
+					setShowThanksWindow={setShowThanksWindow}/>
 	  )}
+
 	  {showErrorWindow && (
 		<ErrorWindow setNewBooking={setNewBooking}
 					setShowErrorWindow={setShowErrorWindow}
