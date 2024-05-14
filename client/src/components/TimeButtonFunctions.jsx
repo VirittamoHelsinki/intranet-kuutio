@@ -132,6 +132,43 @@ const isFirstOrLastTime = (time, selectedTime) => {
 	return (time == firstTime || time == lastTime)
 };
 
+const clearAllButtons = (setNewBooking, timeButtons) => {
+	setNewBooking(false);
+	timeButtons.map((button) => button.data = 'available');
+};
+
+const clearFirstTwoButtons = (setSelectedTime, selectedTime, timeButtons) => {
+	const updatedTimes = selectedTime.slice(2);
+	setSelectedTime(updatedTimes);
+
+	timeButtons.map((button) => {
+		if (button.time == selectedTime[0]) {
+			button.data = 'locked';
+		}
+		if (button.time == selectedTime[1]) {
+			button.data = 'available';
+		}
+		return button;
+	})
+};
+
+const clearLastTwoButtons = (setSelectedTime, selectedTime, timeButtons) => {
+	const updatedTimes = selectedTime.slice(0, 2);
+	setSelectedTime(updatedTimes);
+
+	timeButtons.map((button) => {
+		if (button.time == selectedTime[2]) {
+			button.data = 'available';
+		}
+		if (button.time == selectedTime[3]) {
+			button.data = 'locked';
+		}
+		return button;
+	})
+
+};
+
+
 export const handleButtonUnClick = (booking, selectedTime, timeButtons, setSelectedTime, setNewBooking) => {
 	if (isFirstOrLastTime(booking.time, selectedTime)) {
 		const updatedTimes = selectedTime.filter(time => time != booking.time);
@@ -147,7 +184,21 @@ export const handleButtonUnClick = (booking, selectedTime, timeButtons, setSelec
 		}
 	}
 	else {
-		// add alert, select only first/last time
+		const length = selectedTime.length;
+
+		if (length == 3) {
+			clearAllButtons(setNewBooking, timeButtons);
+		}
+		else if (length == 4) {
+			const index = selectedTime.indexOf(booking.time);
+
+			if (index == 1) {
+				clearFirstTwoButtons(setSelectedTime, selectedTime, timeButtons);
+			}
+			else if (index == 2) {
+				clearLastTwoButtons(setSelectedTime, selectedTime, timeButtons);
+			}
+		}
 	}
   };
 
