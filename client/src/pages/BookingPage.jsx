@@ -102,22 +102,16 @@ const newBookingHandler = () => {
 	Promise.all(bookingPromises)
 		.then(() => {
 			// setLoading(false);
-			// enqueueSnackbar('Booking created successfully', { variant: 'success' });
 			// navigate('/');
 			setShowConfirmWindow(false);
 			setShowThanksWindow(true);
 		})
 		.catch ((error) => {
 			// setLoading(false);
-			// enqueueSnackbar('Error creating bookings', { variant: 'error' });
 			console.error('One or more bookings failed:', error);
 			setShowErrorWindow(true);
 		});
 };
-
-  const fetchBookings = () => {
-	// Fetch bookings logic (removed for simplicity)
-  };
 
   const handleBookingsUpdate = (updatedBookings) => {
 	setBookings(updatedBookings);
@@ -142,7 +136,6 @@ const newBookingHandler = () => {
 		setRegularBooking(false);
 		setRegularBookingTimeformat(null);
 		setRegularBookingLength(1);
-		// fetchBookings();
 	}
 }, [bookings, selectedDate]);
 
