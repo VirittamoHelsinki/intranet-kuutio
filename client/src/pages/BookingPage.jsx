@@ -12,6 +12,9 @@ import RegularBooking from "../components/RegularBooking";
 import "../styles/RegularBooking.scss"
 import { sortBookings } from "../components/BookingListPage";
 import { isSameDate } from "../components/RegularBooking";
+import ErrorWindow from "../components/ErrorWindow";
+import ThanksWindow from "../components/ThanksWindow";
+import ConfirmWindow from "../components/ConfirmWindow";
 
 const BookingPage = () => {
   const [selectedDate, setSelectedDate] = useState(new Date(
@@ -107,7 +110,7 @@ const newBookingHandler = () => {
 		.catch ((error) => {
 			// setLoading(false);
 			// enqueueSnackbar('Error creating bookings', { variant: 'error' });
-			console.error('Error creating a booking:', error);
+			console.error('One or more bookings failed:', error);
 			setShowErrorWindow(true);
 		});
 };
@@ -231,124 +234,26 @@ const newBookingHandler = () => {
 		</div>
 	  </div>
 	  {showConfirmWindow && (
-		<div className="fullscreen-modal">
-		  <div className="modal-detail-content">
-			<div className="detail-row">
-			  <div className="detail-subject">
-				<label>Aihe:</label>
-			  </div>
-			  <div className="detail-value">
-				<label>{topic}</label>
-			  </div>
-			  </div>
-			  <div className="detail-row">
-			  <div className="detail-subject">
-				<label>Nimi:</label>
-			  </div>
-			  <div className="detail-value">
-				<label>{name}</label>
-			  </div>
-			</div>
-			<div className="detail-row">
-			  <div className="detail-subject">
-				<label>Päivä:</label>
-			  </div>
-			  <div className="detail-value">
-				<label>{selectedDate.toLocaleDateString("fi-FI")}</label>
-			  </div>
-			</div>
-			<div className="detail-row">
-			  <div className="detail-subject">
-				<label>Aika:</label>
-			  </div>
-			  <div className="detail-value">
-				<label>
-					{ selectedTime[0] + ' - ' + endingTime }
-				</label>
-			  </div>
-			</div>
-			{ regularBooking && (
-				<div className='detail-row'>
-					<div className="detail-subject">
-						<label>Jatkuva:</label>
-					</div>
-					<div className="detail-value">
-						<label>
-							{regularBookingLength} {regularBookingTimeformat}
-						</label>
-					</div>
-				</div>
-			)}
-		  </div>
-		  <div className="modal-buttons">
-			<button
-			  className="black-button"
-			  onClick={() => {
-				newBookingHandler();
+		<ConfirmWindow topic={topic} endingTime={endingTime}
+					selectedDate={selectedDate} name={name}
+					selectedTime={selectedTime}
+					regularBooking={regularBooking}
+					setShowConfirmWindow={setShowConfirmWindow}
+					newBookingHandler={newBookingHandler}
+					regularBookingLength={regularBookingLength}
+					regularBookingTimeformat={regularBookingTimeformat}/>
+		)}
 
-				// setShowConfirmWindow(false);
-				// setShowThanksWindow(true);
-			  }}
-			>
-			  Vahvista
-			</button>
-			<button className="nocolor-button" onClick={() => setShowConfirmWindow(false)}>
-			  Peruuta
-			</button>
-		  </div>
-		</div>
-	  )}
 	  {showThanksWindow && (
-		<div className="fullscreen-modal">
-		  <div className="modal-thanks-content">
-			<div className="thanks-label">
-			  <label>Kiitos!</label>
-			</div>
-			<div className="description-label">
-			  <label>Huone on varattu sinulle!</label>
-			</div>
-		  </div>
-		  <div className="modal-buttons">
-			<button className="black-button" onClick={() => {
-				setNewBooking(false);
-				setShowThanksWindow(false);
-			}}>
-			  Tee uusi varaus
-			</button>
-			<Link to="/">
-			  <button className="nocolor-button" onClick={() => {
-				  setNewBooking(false);
-				  setShowThanksWindow(false);
-				}}>
-				Takaisin etusivulle
-			  </button>
-			</Link>
-
-		  </div>
-		</div>
+		<ThanksWindow setNewBooking={setNewBooking}
+					setShowThanksWindow={setShowThanksWindow}/>
 	  )}
+
 	  {showErrorWindow && (
-		<div className="fullscreen-modal">
-		  <div className="modal-thanks-content">
-			<div className="thanks-label">
-			  <label>Virhe!</label>
-			</div>
-			<div className="description-label">
-			  <label>Aika ehdittiin varata!</label>
-			</div>
-		  </div>
-		  <div className="modal-buttons">
-			<button className="black-button" onClick={() => {
-				setNewBooking(false);
-				setShowErrorWindow(false);
-				setShowThanksWindow(false);
-			}}>
-			  Tee uusi varaus
-			</button>
-		  </div>
-		</div>
-		)
-	  }
+		<ErrorWindow setNewBooking={setNewBooking}
+					setShowErrorWindow={setShowErrorWindow}
+					setShowConfirmWindow={setShowConfirmWindow}/>
+		)}
 	</div>
   );
 };
