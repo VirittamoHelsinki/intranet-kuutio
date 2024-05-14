@@ -125,7 +125,7 @@ const RegularBooking = ({ selectedDate, selectedTime, bookings, onRegularLengthC
 		let value = parseInt(event.target.value);
 
 		if (isNaN(value)) {
-			value = 0;
+			value = 1;
 		}
 		else {
 			if (value > lenAvailable) {
