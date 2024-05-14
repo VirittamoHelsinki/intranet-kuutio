@@ -14,6 +14,7 @@ import { sortBookings } from "../components/BookingListPage";
 import { isSameDate } from "../components/RegularBooking";
 import ErrorWindow from "../components/ErrorWindow";
 import ThanksWindow from "../components/ThanksWindow";
+import ConfirmWindow from "../components/ConfirmWindow";
 
 const BookingPage = () => {
   const [selectedDate, setSelectedDate] = useState(new Date(
@@ -233,66 +234,16 @@ const newBookingHandler = () => {
 		</div>
 	  </div>
 	  {showConfirmWindow && (
-		<div className="fullscreen-modal">
-		  <div className="modal-detail-content">
-			<div className="detail-row">
-			  <div className="detail-subject">
-				<label>Aihe:</label>
-			  </div>
-			  <div className="detail-value">
-				<label>{topic}</label>
-			  </div>
-			  </div>
-			  <div className="detail-row">
-			  <div className="detail-subject">
-				<label>Nimi:</label>
-			  </div>
-			  <div className="detail-value">
-				<label>{name}</label>
-			  </div>
-			</div>
-			<div className="detail-row">
-			  <div className="detail-subject">
-				<label>Päivä:</label>
-			  </div>
-			  <div className="detail-value">
-				<label>{selectedDate.toLocaleDateString("fi-FI")}</label>
-			  </div>
-			</div>
-			<div className="detail-row">
-			  <div className="detail-subject">
-				<label>Aika:</label>
-			  </div>
-			  <div className="detail-value">
-				<label>
-					{ selectedTime[0] + ' - ' + endingTime }
-				</label>
-			  </div>
-			</div>
-			{ regularBooking && (
-				<div className='detail-row'>
-					<div className="detail-subject">
-						<label>Jatkuva:</label>
-					</div>
-					<div className="detail-value">
-						<label>
-							{regularBookingLength} {regularBookingTimeformat}
-						</label>
-					</div>
-				</div>
-			)}
-		  </div>
-		  <div className="modal-buttons">
-			<button className="black-button"
-				onClick={() => { newBookingHandler() }} >
-				Vahvista
-			</button>
-			<button className="nocolor-button" onClick={() => setShowConfirmWindow(false)}>
-			  Peruuta
-			</button>
-		  </div>
-		</div>
-	  )}
+		<ConfirmWindow topic={topic} endingTime={endingTime}
+					selectedDate={selectedDate} name={name}
+					selectedTime={selectedTime}
+					regularBooking={regularBooking}
+					setShowConfirmWindow={setShowConfirmWindow}
+					newBookingHandler={newBookingHandler}
+					regularBookingLength={regularBookingLength}
+					regularBookingTimeformat={regularBookingTimeformat}/>
+		)}
+
 	  {showThanksWindow && (
 		<ThanksWindow setNewBooking={setNewBooking}
 					setShowThanksWindow={setShowThanksWindow}/>
