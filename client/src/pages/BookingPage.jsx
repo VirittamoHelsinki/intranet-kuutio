@@ -38,6 +38,7 @@ const BookingPage = () => {
   const [regularBookingLength, setRegularBookingLength] = useState(1);
   const [regularBookingTimeformat, setRegularBookingTimeformat] = useState(null);
   const [selectedBookings, setSelectedBookings] = useState([]);
+  const [showStatistics, setShowStatistics] = useState(false);
 
   const options = { weekday: "long", year: "numeric", month: "long", day: "numeric" };
 
@@ -46,8 +47,14 @@ if (selectedTime.length > 0) {
 	endingTime = getEndingTime(selectedTime.sort()[selectedTime.length - 1]);
 }
 
+const statisticsButtonText = showStatistics ? 'Piilota statistiikka' : 'Näytä statistiikka';
+
 const handleRegularBooking = () => {
 	setRegularBooking(!regularBooking);
+};
+
+const handleShowStatistics = () => {
+	setShowStatistics(!showStatistics);
 };
 
 const handleRegularBookingLength = (value) => {
@@ -252,10 +259,22 @@ const newBookingHandler = () => {
 					setShowConfirmWindow={setShowConfirmWindow}/>
 		)}
 	</div>
+
+	<button className="statistics-button" onClick={() => handleShowStatistics()} >
+		{statisticsButtonText}
+	</button>
+
+	{showStatistics && (
+		<>
+		<h2 style={{textAlign: 'center', marginRight: '430px'}}>
+			Varaukset
+		</h2>
 		<div className="datachart">
 			<DataChartDay bookings={bookings}/>
 			<DataChartTime bookings={bookings}/>
 		</div>
+		</>
+	)}
 	</>
   );
 };

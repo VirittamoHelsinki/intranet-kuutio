@@ -476,7 +476,24 @@
 	justify-content: space-around;
 	flex-direction: row;
 	padding-top: 15px;
-	padding-bottom: 300px;
+	padding-bottom: 70px;
+}
+
+.statistics-button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: rgb(234, 234, 234);
+	color: black;
+	padding: 6px;
+	margin: 15px 55px;
+	font-family: "Inter", sans-serif;
+	font-style: normal;
+	font-weight: 600;
+	font-size: 15px;
+	border-radius: 5px;
+	border: 2px solid #000000;
+	cursor: pointer;
 }
 
 @media screen and (max-width: 1440px) {
