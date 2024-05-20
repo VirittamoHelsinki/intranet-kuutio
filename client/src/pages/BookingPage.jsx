@@ -15,6 +15,9 @@ import { isSameDate } from "../components/RegularBooking";
 import ErrorWindow from "../components/ErrorWindow";
 import ThanksWindow from "../components/ThanksWindow";
 import ConfirmWindow from "../components/ConfirmWindow";
+import DataChartTime from "../components/DataChartTime";
+import DataChartDay from "../components/DataChartDay";
+
 
 const BookingPage = () => {
   const [selectedDate, setSelectedDate] = useState(new Date(
@@ -140,6 +143,7 @@ const newBookingHandler = () => {
 }, [bookings, selectedDate]);
 
   return (
+	<>
 	<div className="bookingpage-main">
 	  <div className="bookingpage-content">
 		<div className="calendar-times-content">
@@ -248,6 +252,11 @@ const newBookingHandler = () => {
 					setShowConfirmWindow={setShowConfirmWindow}/>
 		)}
 	</div>
+		<div className="datachart">
+			<DataChartDay bookings={bookings}/>
+			<DataChartTime bookings={bookings}/>
+		</div>
+	</>
   );
 };
 

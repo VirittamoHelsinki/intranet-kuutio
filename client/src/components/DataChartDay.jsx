@@ -8,7 +8,7 @@ const DataChartDay = ({bookings}) => {
 		const date = new Date(booking.selectedDate);
 		const dayOfWeek = date.getDay();
 		weekdays[dayOfWeek] += 1;
-	})
+	});
 
 	const chartSetting = {
 		xAxis: [
@@ -16,43 +16,43 @@ const DataChartDay = ({bookings}) => {
 			label: 'varausten määrä',
 		},
 		],
-		width: 500,
+		width: 400,
 		height: 400,
 	};
 
 	const dataset = [
 		{
 		bookings: weekdays[1],
-		day: 'Ma',
+		day: 'Maanantai',
 		},
 		{
 		bookings: weekdays[2],
-		day: 'Ti',
+		day: 'Tiistai',
 		},
 		{
 		bookings: weekdays[3],
-		day: 'Ke',
+		day: 'Keskiviikko',
 		},
 		{
 		bookings: weekdays[4],
-		day: 'To',
+		day: 'Torstai',
 		},
 		{
 		bookings: weekdays[5],
-		day: 'Pe',
+		day: 'Perjantai',
 		},
 	];
 
 	const valueFormatter = (value) => {
 		const text = value == 1 ? 'varaus' : 'varausta';
 		return `${value} ${text}`;
-	}
+	};
 
 	return (
 		<BarChart
 			dataset={dataset}
 			yAxis={[{ scaleType: 'band', dataKey: 'day' }]}
-			series={[{ dataKey: 'bookings', label: 'Käyttöaste', valueFormatter }]}
+			series={[{ dataKey: 'bookings', label: 'Päivän mukaan', valueFormatter }]}
 			layout="horizontal"
 			{...chartSetting}
 		/>

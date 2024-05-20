@@ -471,6 +471,14 @@
   }
 }
 
+.datachart {
+	display: flex;
+	justify-content: space-around;
+	flex-direction: row;
+	padding-top: 15px;
+	padding-bottom: 300px;
+}
+
 @media screen and (max-width: 1440px) {
   .bookingpage-main {
     justify-content: center;

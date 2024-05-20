@@ -149,7 +149,7 @@ const RegularBooking = ({ selectedDate, selectedTime, bookings, onRegularLengthC
 				onChange={() => (handleRadioButtons(0))}
 				onClick={() => checkRegularBookingAvailability(1)}
 				checked={radioButtons[0]} />
-				<label htmlFor="weekly">viikon välein</label>
+				<label htmlFor="weekly">viikkoa</label>
 
 				<input name='regular-time' type="radio" id='daily' value='arkipäivää'
 				onChange={() => (handleRadioButtons(1))}
