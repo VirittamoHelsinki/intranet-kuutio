@@ -122,7 +122,17 @@ const RegularBooking = ({ selectedDate, selectedTime, bookings, onRegularLengthC
 	};
 
 	const handleBookingLength = (event) => {
-		const value = parseInt(event.target.value);
+		let value = parseInt(event.target.value);
+
+		if (isNaN(value)) {
+			value = 1;
+		}
+		else {
+			if (value > lenAvailable) {
+				value = lenAvailable;
+			}
+		}
+
 		onRegularLengthChange(value);
 		setRegularLength(value);
 	};
@@ -139,7 +149,7 @@ const RegularBooking = ({ selectedDate, selectedTime, bookings, onRegularLengthC
 				onChange={() => (handleRadioButtons(0))}
 				onClick={() => checkRegularBookingAvailability(1)}
 				checked={radioButtons[0]} />
-				<label htmlFor="weekly">viikon välein</label>
+				<label htmlFor="weekly">viikkoa</label>
 
 				<input name='regular-time' type="radio" id='daily' value='arkipäivää'
 				onChange={() => (handleRadioButtons(1))}

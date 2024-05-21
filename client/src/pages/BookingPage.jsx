@@ -15,6 +15,10 @@ import { isSameDate } from "../components/RegularBooking";
 import ErrorWindow from "../components/ErrorWindow";
 import ThanksWindow from "../components/ThanksWindow";
 import ConfirmWindow from "../components/ConfirmWindow";
+import DataChartTime from "../components/DataChartTime";
+import DataChartDay from "../components/DataChartDay";
+import Statistics from "../components/Statistics";
+
 
 const BookingPage = () => {
   const [selectedDate, setSelectedDate] = useState(new Date(
@@ -35,6 +39,7 @@ const BookingPage = () => {
   const [regularBookingLength, setRegularBookingLength] = useState(1);
   const [regularBookingTimeformat, setRegularBookingTimeformat] = useState(null);
   const [selectedBookings, setSelectedBookings] = useState([]);
+  const [showStatistics, setShowStatistics] = useState(false);
 
   const options = { weekday: "long", year: "numeric", month: "long", day: "numeric" };
 
@@ -43,8 +48,14 @@ if (selectedTime.length > 0) {
 	endingTime = getEndingTime(selectedTime.sort()[selectedTime.length - 1]);
 }
 
+const statisticsButtonText = showStatistics ? 'Piilota statistiikka' : 'Näytä statistiikka';
+
 const handleRegularBooking = () => {
 	setRegularBooking(!regularBooking);
+};
+
+const handleShowStatistics = () => {
+	setShowStatistics(!showStatistics);
 };
 
 const handleRegularBookingLength = (value) => {
@@ -102,22 +113,16 @@ const newBookingHandler = () => {
 	Promise.all(bookingPromises)
 		.then(() => {
 			// setLoading(false);
-			// enqueueSnackbar('Booking created successfully', { variant: 'success' });
 			// navigate('/');
 			setShowConfirmWindow(false);
 			setShowThanksWindow(true);
 		})
 		.catch ((error) => {
 			// setLoading(false);
-			// enqueueSnackbar('Error creating bookings', { variant: 'error' });
 			console.error('One or more bookings failed:', error);
 			setShowErrorWindow(true);
 		});
 };
-
-  const fetchBookings = () => {
-	// Fetch bookings logic (removed for simplicity)
-  };
 
   const handleBookingsUpdate = (updatedBookings) => {
 	setBookings(updatedBookings);
@@ -142,11 +147,11 @@ const newBookingHandler = () => {
 		setRegularBooking(false);
 		setRegularBookingTimeformat(null);
 		setRegularBookingLength(1);
-		// fetchBookings();
 	}
 }, [bookings, selectedDate]);
 
   return (
+	<>
 	<div className="bookingpage-main">
 	  <div className="bookingpage-content">
 		<div className="calendar-times-content">
@@ -255,6 +260,15 @@ const newBookingHandler = () => {
 					setShowConfirmWindow={setShowConfirmWindow}/>
 		)}
 	</div>
+
+	<button className="statistics-button" onClick={() => handleShowStatistics()} >
+		{statisticsButtonText}
+	</button>
+
+	{showStatistics && (
+		<Statistics bookings={bookings}/>
+	)}
+	</>
   );
 };
 
