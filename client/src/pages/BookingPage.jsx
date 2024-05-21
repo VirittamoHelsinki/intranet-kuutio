@@ -17,6 +17,7 @@ import ThanksWindow from "../components/ThanksWindow";
 import ConfirmWindow from "../components/ConfirmWindow";
 import DataChartTime from "../components/DataChartTime";
 import DataChartDay from "../components/DataChartDay";
+import Statistics from "../components/Statistics";
 
 
 const BookingPage = () => {
@@ -265,15 +266,7 @@ const newBookingHandler = () => {
 	</button>
 
 	{showStatistics && (
-		<>
-		<h2 style={{textAlign: 'center', marginRight: '430px'}}>
-			Varaukset
-		</h2>
-		<div className="datachart">
-			<DataChartDay bookings={bookings}/>
-			<DataChartTime bookings={bookings}/>
-		</div>
-		</>
+		<Statistics bookings={bookings}/>
 	)}
 	</>
   );
